@@ -1,6 +1,6 @@
 ﻿
 $(document).ready(function () {
-    debugger;
+    //debugger;
     Employee();
     // $('#demoGrid').css("display", "block");
     $('#demoGridNonActive').css("display", "none");
@@ -45,12 +45,12 @@ function Employee() {
                 "searchable": false
             },
             {
-                "targets": [2],
+                "targets": [3],
                 "visible": false,
                 "searchable": false
             },
             {
-                "targets": [5],
+                "targets": [6],
                 "visible": true,
 
                 "render": function (data, type, full, meta) {
@@ -69,6 +69,30 @@ function Employee() {
 
         "columns": [
             { "data": "userId", "name": "userId", "autoWidth": false },
+            {
+                "data": "EmployeeType", "render": function (data, type, full, meta) {
+
+                    if (full["EmployeeType"] == "V") {
+
+                        return 'Vehicle';
+
+                    }
+                    if (full["EmployeeType"] == "S") {
+
+                        return 'Street Sweeping';
+
+                    }
+                    if (full["EmployeeType"] == "L") {
+
+                        return 'Liquid Waste';
+
+                    }
+
+                    else {
+                        return 'Not Available';
+                    }
+                }
+            },
             { "data": "userName", "name": "userName", "width": "30%" },
             { "data": "userNameMar", "name": "userNameMar", "width": "20%" },
             { "data": "userMobileNumber", "name": "userMobileNumber", "width": "13%" },

@@ -564,7 +564,9 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                         userEmployeeNo = x.userEmployeeNo,
                         isActive = x.isActive.ToString(),
                         bloodGroup = x.bloodGroup,
-                        gcTarget = x.gcTarget
+                        gcTarget = x.gcTarget,
+                        EmployeeType = x.EmployeeType
+
 
 
                     }).Where(x => x.isActive == "True").ToList();
@@ -617,6 +619,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                                              (string.IsNullOrEmpty(c.userName) ? " " : c.userName) + " " +
                                              (string.IsNullOrEmpty(c.bloodGroup) ? " " : c.bloodGroup) + " " +
                                              (string.IsNullOrEmpty(c.userAddress) ? " " : c.userAddress) + " " +
+                                              (string.IsNullOrEmpty(c.EmployeeType) ? " " : c.EmployeeType) + " " +
                                              (string.IsNullOrEmpty(c.userEmployeeNo) ? " " : c.userEmployeeNo)).ToUpper().Contains(SearchString.ToUpper())).ToList();
 
 
@@ -644,7 +647,8 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                         userEmployeeNo = x.userEmployeeNo,
                         isActive = x.isActive.ToString(),
                         bloodGroup = x.bloodGroup,
-                        gcTarget = x.gcTarget
+                        gcTarget = x.gcTarget,
+                        EmployeeType=x.EmployeeType
 
 
                     }).Where(x => x.isActive == "False").ToList();
@@ -690,6 +694,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                                              (string.IsNullOrEmpty(c.userName) ? " " : c.userName) + " " +
                                              (string.IsNullOrEmpty(c.bloodGroup) ? " " : c.bloodGroup) + " " +
                                              (string.IsNullOrEmpty(c.userAddress) ? " " : c.userAddress) + " " +
+                                                 (string.IsNullOrEmpty(c.EmployeeType) ? " " : c.EmployeeType) + " " +
                                              (string.IsNullOrEmpty(c.userEmployeeNo) ? " " : c.userEmployeeNo)).ToUpper().Contains(SearchString.ToUpper())).ToList();
                         data = model.ToList();
 
@@ -715,7 +720,8 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                         userEmployeeNo = x.userEmployeeNo,
                         isActive = x.isActive.ToString(),
                         bloodGroup = x.bloodGroup,
-                        gcTarget = x.gcTarget
+                        gcTarget = x.gcTarget,
+                        EmployeeType=x.EmployeeType
 
 
                     }).ToList();
