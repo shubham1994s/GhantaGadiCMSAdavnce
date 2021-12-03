@@ -643,6 +643,7 @@ namespace SwachBharat.CMS.Bll.Services
                             model.isActive = data.isActive;
                             model.bloodGroup = data.bloodGroup;
                             model.gcTarget = data.gcTarget;
+                            model.EmployeeType = data.EmployeeType;
                             db.SaveChanges();
                         }
                     }
@@ -1766,6 +1767,7 @@ namespace SwachBharat.CMS.Bll.Services
             model.bloodGroup = data.bloodGroup;
             model.isActive = data.isActive;
             model.gcTarget = data.gcTarget;
+            model.EmployeeType = data.EmployeeType;
             return model;
         }
 
@@ -2142,6 +2144,7 @@ namespace SwachBharat.CMS.Bll.Services
             model.isActive = data.isActive;
             model.bloodGroup = data.bloodGroup;
             model.gcTarget = data.gcTarget;
+            model.EmployeeType = data.EmployeeType;
             return model;
         }
 

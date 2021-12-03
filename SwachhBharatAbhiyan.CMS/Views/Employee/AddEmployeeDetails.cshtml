@@ -70,7 +70,25 @@
 
 
                     </div>
+
                     <div class="col-md-6">
+
+                        <div class="form-group">
+                            @*@Html.Label("रक्त गट / Blood Group ")*@
+                            @Html.Label("Employee Type")
+                            @{ var ElistItems = new List<SelectListItem>();
+
+                                ElistItems.Add(new SelectListItem { Text = "Select Employee Type", Value = "0" });
+                                ElistItems.Add(new SelectListItem { Text = "Vehicle", Value = "V" });
+                                ElistItems.Add(new SelectListItem { Text = "Street Sweeping", Value = "S" });
+                                ElistItems.Add(new SelectListItem { Text = "Liquid Waste", Value = "L" });
+
+                            }
+                            @Html.DropDownListFor(model => model.EmployeeType, ElistItems, new { style = "font-family:Arial, FontAwesome", required = "required", @class = "form-control RequiredInput validate[required] RequiredInput" })
+                            <span class="text-danger" id="err_EType"></span>
+                            <span class="help-block with-errors"></span>
+                        </div>
+
                         <div class="form-group">
                             @*@Html.Label("नाव / Name")*@
                             @Html.Label("Name")
@@ -82,19 +100,19 @@
                             <span class="help-block with-errors"></span>
                         </div>
                         @*<div class="form-group">
-                            @Html.Label("नाव मराठी / Name Marathi")
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            @Html.TextBoxFor(model => model.userNameMar, new { @class = "form-control", style = "font-family:Arial, FontAwesome" })
-                            @Html.ValidationMessageFor(model => model.userNameMar, "", new { @class = "text-danger" })
-                            <span class="text-danger" id="err_name_mar"></span>
-                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                            <span class="help-block with-errors"></span>
-                        </div>*@
+            @Html.Label("नाव मराठी / Name Marathi")
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.TextBoxFor(model => model.userNameMar, new { @class = "form-control", style = "font-family:Arial, FontAwesome" })
+            @Html.ValidationMessageFor(model => model.userNameMar, "", new { @class = "text-danger" })
+            <span class="text-danger" id="err_name_mar"></span>
+            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+            <span class="help-block with-errors"></span>
+        </div>*@
                         <div class="form-group">
                             @*@Html.Label("एम्प्लॉयमेंट आयडी / Employment ID ")*@
                             @Html.Label("Employment ID ")
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            @Html.TextBoxFor(model => model.userEmployeeNo, new { @class = "form-control", style = "font-family:Arial, FontAwesome"})
+                            @Html.TextBoxFor(model => model.userEmployeeNo, new { @class = "form-control", style = "font-family:Arial, FontAwesome" })
                             @Html.ValidationMessageFor(model => model.userEmployeeNo, "", new { @class = "text-danger" })
                             <span class="text-danger" id="err_empidd"></span>
                             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>

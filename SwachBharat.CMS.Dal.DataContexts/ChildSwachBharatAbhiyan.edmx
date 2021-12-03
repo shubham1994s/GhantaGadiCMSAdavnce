@@ -158,6 +158,7 @@
           <Property Name="FCMID" Type="varchar" MaxLength="500" />
           <Property Name="lastModifiedEntry" Type="datetime" />
           <Property Name="RFIDTagId" Type="nvarchar" MaxLength="255" />
+          <Property Name="WasteType" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Location">
           <Key>
@@ -238,7 +239,7 @@
           <Property Name="lastModifyDate" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'LIVEDevSwachhBharatNagpur.dbo.SauchalayAddress' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.SauchalayAddress' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="SauchalayAddress">
           <Key>
             <PropertyRef Name="Id" />
@@ -265,7 +266,7 @@ warning 6002: The table/view 'LIVEDevSwachhBharatNagpur.dbo.SauchalayAddress' do
           <Property Name="INSERT_ID" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'LIVEDevSwachhBharatNagpur.dbo.SS_1.4_QUESTION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.SS_1.4_QUESTION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="SS_1_4_QUESTION">
           <Key>
             <PropertyRef Name="Q_ID" />
@@ -316,6 +317,7 @@ warning 6002: The table/view 'LIVEDevSwachhBharatNagpur.dbo.SS_1.4_QUESTION' doe
           <Property Name="bloodGroup" Type="nvarchar" MaxLength="250" />
           <Property Name="isActive" Type="bit" />
           <Property Name="gcTarget" Type="varchar" MaxLength="250" />
+          <Property Name="EmployeeType" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="VehicleType">
           <Key>
@@ -390,7 +392,7 @@ warning 6002: The table/view 'LIVEDevSwachhBharatNagpur.dbo.SS_1.4_QUESTION' doe
           <Property Name="name" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'LIVEDevSwachhBharatNagpur.dbo.Vw_MsgNotification' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotification' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Vw_MsgNotification">
           <Key>
             <PropertyRef Name="userId" />
@@ -410,7 +412,6 @@ warning 6002: The table/view 'LIVEDevSwachhBharatNagpur.dbo.Vw_MsgNotification' 
           <Property Name="bloodGroup" Type="nvarchar" MaxLength="250" />
           <Property Name="isActive" Type="bit" />
           <Property Name="gcTarget" Type="varchar" MaxLength="250" />
-          <Property Name="imoNo2" Type="nvarchar(max)" />
         </EntityType>
         <Association Name="FK_SS_1_4_ANSWER_SS_1_4_ANSWER">
           <End Role="SS_1_4_ANSWER" Type="Self.SS_1_4_ANSWER" Multiplicity="1" />
@@ -566,8 +567,7 @@ warning 6002: The table/view 'LIVEDevSwachhBharatNagpur.dbo.Vw_MsgNotification' 
     [Vw_MsgNotification].[imoNo] AS [imoNo], 
     [Vw_MsgNotification].[bloodGroup] AS [bloodGroup], 
     [Vw_MsgNotification].[isActive] AS [isActive], 
-    [Vw_MsgNotification].[gcTarget] AS [gcTarget], 
-    [Vw_MsgNotification].[imoNo2] AS [imoNo2]
+    [Vw_MsgNotification].[gcTarget] AS [gcTarget]
     FROM [dbo].[Vw_MsgNotification] AS [Vw_MsgNotification]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_SS_1_4_ANSWER_SS_1_4_ANSWER" Association="Self.FK_SS_1_4_ANSWER_SS_1_4_ANSWER">
@@ -684,12 +684,12 @@ warning 6002: The table/view 'LIVEDevSwachhBharatNagpur.dbo.Vw_MsgNotification' 
             <Parameter Name="fdate" Mode="In" Type="DateTime" />
             <Parameter Name="tdate" Mode="In" Type="DateTime" />
           </FunctionImport>
-          <EntitySet Name="Vw_MsgNotification" EntityType="DevSwachhBharatNagpurModel.Vw_MsgNotification" />
           <EntitySet Name="GarbageCollectionDetails" EntityType="DevSwachhBharatNagpurModel.GarbageCollectionDetail" />
           <EntitySet Name="Daily_Attendance" EntityType="DevSwachhBharatNagpurModel.Daily_Attendance" />
-          <EntitySet Name="UserMasters" EntityType="DevSwachhBharatNagpurModel.UserMaster" />
           <EntitySet Name="WM_Garbage_Sales" EntityType="DevSwachhBharatNagpurModel.WM_Garbage_Sales" />
           <EntitySet Name="HouseMasters" EntityType="DevSwachhBharatNagpurModel.HouseMaster" />
+          <EntitySet Name="UserMasters" EntityType="DevSwachhBharatNagpurModel.UserMaster" />
+          <EntitySet Name="Vw_MsgNotification" EntityType="DevSwachhBharatNagpurModel.Vw_MsgNotification" />
          
         </EntityContainer>
         <ComplexType Name="CurrentAllUserLocation_Result">
@@ -1377,27 +1377,6 @@ warning 6002: The table/view 'LIVEDevSwachhBharatNagpur.dbo.Vw_MsgNotification' 
           <Property Type="String" Name="lat" Nullable="true" MaxLength="500" />
           <Property Type="String" Name="long" Nullable="true" MaxLength="500" />
         </ComplexType>
-        <EntityType Name="Vw_MsgNotification">
-          <Key>
-            <PropertyRef Name="userId" />
-          </Key>
-          <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="userName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="userNameMar" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="userLoginId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="userPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="userMobileNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="userAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="userProfileImage" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="userEmployeeNo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="userDesignation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="imoNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="bloodGroup" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="isActive" Type="Boolean" />
-          <Property Name="gcTarget" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="imoNo2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="GarbageCollectionDetail">
           <Key>
             <PropertyRef Name="gcId" />
@@ -1453,26 +1432,6 @@ warning 6002: The table/view 'LIVEDevSwachhBharatNagpur.dbo.Vw_MsgNotification' 
           <Property Name="totalKm" Type="Int32" />
           <Property Name="OutbatteryStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="UserMaster">
-          <Key>
-            <PropertyRef Name="userId" />
-          </Key>
-          <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="userName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="userNameMar" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="userLoginId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="userPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="userMobileNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="userAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="userProfileImage" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="userEmployeeNo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="userDesignation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="imoNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="bloodGroup" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="isActive" Type="Boolean" />
-          <Property Name="gcTarget" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="WM_Garbage_Sales">
           <Key>
             <PropertyRef Name="ID" />
@@ -1506,6 +1465,48 @@ warning 6002: The table/view 'LIVEDevSwachhBharatNagpur.dbo.Vw_MsgNotification' 
           <Property Name="FCMID" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="lastModifiedEntry" Type="DateTime" Precision="3" />
           <Property Name="RFIDTagId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="WasteType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="UserMaster">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="userNameMar" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="userLoginId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="userPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="userMobileNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="userAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="userProfileImage" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="userEmployeeNo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="userDesignation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="imoNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="bloodGroup" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="gcTarget" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Vw_MsgNotification">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="userNameMar" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="userLoginId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="userPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="userMobileNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="userAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="userProfileImage" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="userEmployeeNo" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="userDesignation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="imoNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="bloodGroup" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="gcTarget" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2157,28 +2158,6 @@ warning 6002: The table/view 'LIVEDevSwachhBharatNagpur.dbo.Vw_MsgNotification' 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="Vw_MsgNotification">
-            <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.Vw_MsgNotification">
-              <MappingFragment StoreEntitySet="Vw_MsgNotification">
-                <ScalarProperty Name="imoNo2" ColumnName="imoNo2" />
-                <ScalarProperty Name="gcTarget" ColumnName="gcTarget" />
-                <ScalarProperty Name="isActive" ColumnName="isActive" />
-                <ScalarProperty Name="bloodGroup" ColumnName="bloodGroup" />
-                <ScalarProperty Name="imoNo" ColumnName="imoNo" />
-                <ScalarProperty Name="userDesignation" ColumnName="userDesignation" />
-                <ScalarProperty Name="userEmployeeNo" ColumnName="userEmployeeNo" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="userProfileImage" ColumnName="userProfileImage" />
-                <ScalarProperty Name="userAddress" ColumnName="userAddress" />
-                <ScalarProperty Name="userMobileNumber" ColumnName="userMobileNumber" />
-                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
-                <ScalarProperty Name="userLoginId" ColumnName="userLoginId" />
-                <ScalarProperty Name="userNameMar" ColumnName="userNameMar" />
-                <ScalarProperty Name="userName" ColumnName="userName" />
-                <ScalarProperty Name="userId" ColumnName="userId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="GarbageCollectionDetails">
             <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.GarbageCollectionDetail">
               <MappingFragment StoreEntitySet="GarbageCollectionDetails">
@@ -2236,27 +2215,6 @@ warning 6002: The table/view 'LIVEDevSwachhBharatNagpur.dbo.Vw_MsgNotification' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UserMasters">
-            <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.UserMaster">
-              <MappingFragment StoreEntitySet="UserMaster">
-                <ScalarProperty Name="gcTarget" ColumnName="gcTarget" />
-                <ScalarProperty Name="isActive" ColumnName="isActive" />
-                <ScalarProperty Name="bloodGroup" ColumnName="bloodGroup" />
-                <ScalarProperty Name="imoNo" ColumnName="imoNo" />
-                <ScalarProperty Name="userDesignation" ColumnName="userDesignation" />
-                <ScalarProperty Name="userEmployeeNo" ColumnName="userEmployeeNo" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="userProfileImage" ColumnName="userProfileImage" />
-                <ScalarProperty Name="userAddress" ColumnName="userAddress" />
-                <ScalarProperty Name="userMobileNumber" ColumnName="userMobileNumber" />
-                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
-                <ScalarProperty Name="userLoginId" ColumnName="userLoginId" />
-                <ScalarProperty Name="userNameMar" ColumnName="userNameMar" />
-                <ScalarProperty Name="userName" ColumnName="userName" />
-                <ScalarProperty Name="userId" ColumnName="userId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="WM_Garbage_Sales">
             <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.WM_Garbage_Sales">
               <MappingFragment StoreEntitySet="WM_Garbage_Sales">
@@ -2272,6 +2230,7 @@ warning 6002: The table/view 'LIVEDevSwachhBharatNagpur.dbo.Vw_MsgNotification' 
           <EntitySetMapping Name="HouseMasters">
             <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.HouseMaster">
               <MappingFragment StoreEntitySet="HouseMaster">
+                <ScalarProperty Name="WasteType" ColumnName="WasteType" />
                 <ScalarProperty Name="RFIDTagId" ColumnName="RFIDTagId" />
                 <ScalarProperty Name="lastModifiedEntry" ColumnName="lastModifiedEntry" />
                 <ScalarProperty Name="FCMID" ColumnName="FCMID" />
@@ -2290,6 +2249,49 @@ warning 6002: The table/view 'LIVEDevSwachhBharatNagpur.dbo.Vw_MsgNotification' 
                 <ScalarProperty Name="houseOwner" ColumnName="houseOwner" />
                 <ScalarProperty Name="houseNumber" ColumnName="houseNumber" />
                 <ScalarProperty Name="houseId" ColumnName="houseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserMasters">
+            <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.UserMaster">
+              <MappingFragment StoreEntitySet="UserMaster">
+                <ScalarProperty Name="EmployeeType" ColumnName="EmployeeType" />
+                <ScalarProperty Name="gcTarget" ColumnName="gcTarget" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="bloodGroup" ColumnName="bloodGroup" />
+                <ScalarProperty Name="imoNo" ColumnName="imoNo" />
+                <ScalarProperty Name="userDesignation" ColumnName="userDesignation" />
+                <ScalarProperty Name="userEmployeeNo" ColumnName="userEmployeeNo" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="userProfileImage" ColumnName="userProfileImage" />
+                <ScalarProperty Name="userAddress" ColumnName="userAddress" />
+                <ScalarProperty Name="userMobileNumber" ColumnName="userMobileNumber" />
+                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
+                <ScalarProperty Name="userLoginId" ColumnName="userLoginId" />
+                <ScalarProperty Name="userNameMar" ColumnName="userNameMar" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vw_MsgNotification">
+            <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.Vw_MsgNotification">
+              <MappingFragment StoreEntitySet="Vw_MsgNotification">
+                <ScalarProperty Name="gcTarget" ColumnName="gcTarget" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="bloodGroup" ColumnName="bloodGroup" />
+                <ScalarProperty Name="imoNo" ColumnName="imoNo" />
+                <ScalarProperty Name="userDesignation" ColumnName="userDesignation" />
+                <ScalarProperty Name="userEmployeeNo" ColumnName="userEmployeeNo" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="userProfileImage" ColumnName="userProfileImage" />
+                <ScalarProperty Name="userAddress" ColumnName="userAddress" />
+                <ScalarProperty Name="userMobileNumber" ColumnName="userMobileNumber" />
+                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
+                <ScalarProperty Name="userLoginId" ColumnName="userLoginId" />
+                <ScalarProperty Name="userNameMar" ColumnName="userNameMar" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -630,6 +630,7 @@
     <Content Include="Content\Splash\responsive.css" />
     <Content Include="Content\theme-assets\css\custom.css" />
     <Content Include="Content\theme-assets\css\fontastic.css" />
+    <Content Include="Content\theme-assets\css\MyCustom.css" />
     <Content Include="Content\theme-assets\css\style.blue.css" />
     <Content Include="Content\theme-assets\css\style.default - Copy.css" />
     <Content Include="Content\theme-assets\css\style.default.css" />
