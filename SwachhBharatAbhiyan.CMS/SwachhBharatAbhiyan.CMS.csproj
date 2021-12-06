@@ -258,6 +258,7 @@
     <Compile Include="Controllers\HouseScanifyController.cs" />
     <Compile Include="Controllers\InfotainmentController.cs" />
     <Compile Include="Controllers\LeagueController.cs" />
+    <Compile Include="Controllers\LiquidWasteController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\MainMasterController.cs" />
@@ -476,6 +477,7 @@
     <Content Include="Content\DatatableGrid\InfotainmentGrid.js" />
     <Content Include="Content\DatatableGrid\InfotainmentResult.js" />
     <Content Include="Content\DatatableGrid\League.js" />
+    <Content Include="Content\DatatableGrid\LiquidWasteGrid.js" />
     <Content Include="Content\DatatableGrid\Log.js" />
     <Content Include="Content\DatatableGrid\OnepointeightEditGrid.js" />
     <Content Include="Content\DatatableGrid\OnepointeightGrid.js" />
@@ -1330,6 +1332,9 @@
     <Content Include="Views\StreetSweeping\Index.cshtml" />
     <Content Include="Views\StreetSweeping\MenuIndex.cshtml" />
     <Content Include="Views\StreetSweeping\AddStreetSweeping.cshtml" />
+    <Content Include="Views\LiquidWaste\Index.cshtml" />
+    <Content Include="Views\LiquidWaste\MenuIndex.cshtml" />
+    <Content Include="Views\LiquidWaste\AddLiquidWaste.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

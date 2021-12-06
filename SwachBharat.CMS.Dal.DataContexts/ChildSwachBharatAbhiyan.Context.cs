@@ -359,5 +359,10 @@ namespace SwachBharat.CMS.Dal.DataContexts
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_StreetSweepDetails_Result>("SP_StreetSweepDetails");
         }
+    
+        public virtual ObjectResult<SP_LiquidWasteDetails_Result> SP_LiquidWasteDetails()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_LiquidWasteDetails_Result>("SP_LiquidWasteDetails");
+        }
     }
 }

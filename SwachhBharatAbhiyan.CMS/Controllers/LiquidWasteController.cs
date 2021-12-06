@@ -15,12 +15,12 @@ using System.Web.Mvc;
 
 namespace SwachhBharatAbhiyan.CMS.Controllers
 {
-    public class StreetSweepingController : Controller
+    public class LiquidWasteController : Controller
     {
         IChildRepository childRepository;
         IMainRepository mainRepository;
 
-        public StreetSweepingController()
+        public LiquidWasteController()
         {
             if (SessionHandler.Current.AppId != 0)
             {
@@ -30,7 +30,7 @@ namespace SwachhBharatAbhiyan.CMS.Controllers
             else
                 Redirect("/Account/Login");
         }
-        // GET: StreetSweeping
+        // GET: LiquidWaste
         public ActionResult Index()
         {
             if (SessionHandler.Current.AppId != 0)
@@ -50,11 +50,11 @@ namespace SwachhBharatAbhiyan.CMS.Controllers
                 return Redirect("/Account/Login");
         }
 
-        public ActionResult AddStreetSweeping(int teamId = -1)
+        public ActionResult AddLiquidWaste(int teamId = -1)
         {
             if (SessionHandler.Current.AppId != 0)
             {
-                StreetSweepVM dump = childRepository.GetStreetSweepId(teamId);
+                LiquidWasteVM dump = childRepository.GetLiquidWasteId(teamId);
                 return View(dump);
             }
             else
@@ -62,7 +62,7 @@ namespace SwachhBharatAbhiyan.CMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddStreetSweeping(StreetSweepVM StreetSweep, HttpPostedFileBase filesUpload)
+        public ActionResult AddLiquidWaste(LiquidWasteVM LiquidWaste, HttpPostedFileBase filesUpload)
         {
             if (SessionHandler.Current.AppId != 0)
             {
@@ -73,7 +73,7 @@ namespace SwachhBharatAbhiyan.CMS.Controllers
                 //Converting  Url to image 
                 // var url = string.Format("http://api.qrserver.com/v1/create-qr-code/?data="+ point.ReferanceId);
 
-                var url = string.Format("https://chart.googleapis.com/chart?cht=qr&chl=" + StreetSweep.ReferanceId + "&chs=160x160&chld=L|0");
+                var url = string.Format("https://chart.googleapis.com/chart?cht=qr&chl=" + LiquidWaste.ReferanceId + "&chs=160x160&chld=L|0");
 
                 WebResponse response = default(WebResponse);
                 Stream remoteStream = default(Stream);
@@ -94,9 +94,9 @@ namespace SwachhBharatAbhiyan.CMS.Controllers
                 response.Close();
                 remoteStream.Close();
                 readStream.Close();
-                StreetSweep.SSQRCode = image_Guid;
+                LiquidWaste.LWQRCode = image_Guid;
 
-                StreetSweepVM pointDetails = childRepository.SaveStreetSweep(StreetSweep);
+                LiquidWasteVM pointDetails = childRepository.SaveLiquidWastes(LiquidWaste);
 
 
                 return Redirect("Index");
@@ -133,7 +133,7 @@ namespace SwachhBharatAbhiyan.CMS.Controllers
                 for (int i = 1; i <= zone.id; i++)
                 {
                     int number = 1000;
-                    string refer = "SSSBA" + (number + n + i);
+                    string refer = "LWSBA" + (number + n + i);
                     dumpYard.ReferanceId = refer;
 
                     dumpYard.dyId = 0;
@@ -398,7 +398,6 @@ namespace SwachhBharatAbhiyan.CMS.Controllers
 
         }
 
-        #endregion
-
     }
 }
+#endregion

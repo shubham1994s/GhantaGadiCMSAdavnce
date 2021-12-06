@@ -224,7 +224,12 @@ namespace SwachBharat.CMS.Bll.Repository.ChildRepository
         {
             return screenService.GetStreetSweepDetails(teamId);
         }
-        
+
+        public LiquidWasteVM GetLiquidWasteId(int teamId)
+        {
+            return screenService.GetLiquidWasteDetails(teamId);
+        }
+
         public DumpYardDetailsVM SaveDumpYard(DumpYardDetailsVM data)
         {
             if (data.dyId <= 0)
@@ -232,6 +237,15 @@ namespace SwachBharat.CMS.Bll.Repository.ChildRepository
                 data.dyId = 0;
             }
             DumpYardDetailsVM dd = screenService.SaveDumpYardtDetails(data);
+            return dd;
+        }
+        public LiquidWasteVM SaveLiquidWastes(LiquidWasteVM data)
+        {
+            if (data.LWId <= 0)
+            {
+                data.LWId = 0;
+            }
+            LiquidWasteVM dd = screenService.SaveLiquidWasteDetails(data);
             return dd;
         }
         public StreetSweepVM SaveStreetSweep(StreetSweepVM data)
