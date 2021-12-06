@@ -64,8 +64,11 @@ namespace SwachBharat.CMS.Bll.Services
         //Added By Saurabh
 
         DumpYardDetailsVM GetDumpYardtDetails(int teamId);
-
+        //Added By Shubham
+        StreetSweepVM GetStreetSweepDetails(int teamId);
         DumpYardDetailsVM SaveDumpYardtDetails(DumpYardDetailsVM data);
+
+        StreetSweepVM SaveStreetSweepDetails(StreetSweepVM data);
         void DeletDumpYardtDetails(int teamId);
 
         //Added By Saurabh (27 May 2019)

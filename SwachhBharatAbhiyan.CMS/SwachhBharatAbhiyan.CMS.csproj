@@ -265,6 +265,7 @@
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RfidController.cs" />
     <Compile Include="Controllers\SauchalayController.cs" />
+    <Compile Include="Controllers\StreetSweepingController.cs" />
     <Compile Include="Controllers\WasteManagementController.cs" />
     <Compile Include="DisplayReports.aspx.cs">
       <DependentUpon>DisplayReports.aspx</DependentUpon>
@@ -494,6 +495,7 @@
     <Content Include="Content\DatatableGrid\SauchalayRegistrationGrid.js" />
     <Content Include="Content\DatatableGrid\scanifyDT.js" />
     <Content Include="Content\DatatableGrid\StateGrid.js" />
+    <Content Include="Content\DatatableGrid\StreetSweepGrid.js" />
     <Content Include="Content\DatatableGrid\TalukaGrid.js" />
     <Content Include="Content\DatatableGrid\VehicleTypeGrid.js" />
     <Content Include="Content\DatatableGrid\WardNumberGrid.js" />
@@ -1325,6 +1327,9 @@
     <Content Include="Views\HouseMaster\SaveBundelVisitingDryWet.cshtml" />
     <Content Include="Views\HouseMaster\SaveDryWet.cshtml" />
     <Content Include="Views\HouseMaster\SaveBundelWetWaste.cshtml" />
+    <Content Include="Views\StreetSweeping\Index.cshtml" />
+    <Content Include="Views\StreetSweeping\MenuIndex.cshtml" />
+    <Content Include="Views\StreetSweeping\AddStreetSweeping.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

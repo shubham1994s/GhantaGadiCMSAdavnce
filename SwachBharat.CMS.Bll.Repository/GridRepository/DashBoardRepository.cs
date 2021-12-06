@@ -1623,6 +1623,50 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
             }
         }
 
+        public IEnumerable<SBAStreeSweepDetailsGridRow> GetStreetSweepData(long wildcard, string SearchString, int appId)
+        {
+            DevSwachhBharatMainEntities dbMain = new DevSwachhBharatMainEntities();
+            var appDetails = dbMain.AppDetails.Where(x => x.AppId == appId).FirstOrDefault();
+
+            string ThumbnaiUrlCMS = appDetails.baseImageUrlCMS + appDetails.basePath + appDetails.DumpYardQRCode + "/";
+            using (var db = new DevChildSwachhBharatNagpurEntities(appId))
+            {
+                var data = db.SP_StreetSweepDetails().Select(x => new SBAStreeSweepDetailsGridRow
+                {
+
+                    Zone = x.Zone,
+                    Ward = x.Ward,
+                    Area = x.Area,
+                    Name = x.Name,
+                    NameMar = x.NameMar,
+                    Id = x.SSId,
+                    QrCode = ThumbnaiUrlCMS + x.Images.Trim(),
+                    Address = x.Address,
+                    ReferanceId = x.ReferanceId
+
+                }).ToList();
+                if (!string.IsNullOrEmpty(SearchString))
+                {
+                    //var model = data.Where(c => c.Area.ToString().Contains(SearchString)
+                    //|| c.Name.ToString().Contains(SearchString) || c.NameMar.ToString().Contains(SearchString) || c.ReferanceId.ToString().Contains(SearchString)
+
+                    //|| c.Area.Contains(SearchString) || c.NameMar.ToLower().ToString().Contains(SearchString) || c.Name.ToLower().ToString().Contains(SearchString) || c.ReferanceId.ToLower().ToString().Contains(SearchString)
+
+                    //|| c.Area.ToUpper().ToString().Contains(SearchString) || c.Name.ToUpper().ToString().Contains(SearchString)
+                    //|| c.NameMar.ToUpper().ToString().Contains(SearchString) || c.ReferanceId.ToUpper().ToString().Contains(SearchString)).ToList();
+
+                    var model = data.Where(c => ((string.IsNullOrEmpty(c.Area) ? " " : c.Area) + " " +
+                                      (string.IsNullOrEmpty(c.Name) ? " " : c.Name) + " " +
+                                      (string.IsNullOrEmpty(c.NameMar) ? " " : c.NameMar) + " " +
+                                      (string.IsNullOrEmpty(c.ReferanceId) ? " " : c.ReferanceId)).ToUpper().Contains(SearchString.ToUpper())).ToList();
+
+
+                    data = model.ToList();
+                }
+                return data.OrderByDescending(c => c.Id).ToList();
+            }
+        }
+
 
         //Added By saurabh 05 MAy 2019
 
