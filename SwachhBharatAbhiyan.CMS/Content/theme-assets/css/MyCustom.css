@@ -41,3 +41,6 @@ svg.svg g g * {
 thead {
    color: #1440df !important;
 }
+header.page-header {
+    text-align:center;
+}
