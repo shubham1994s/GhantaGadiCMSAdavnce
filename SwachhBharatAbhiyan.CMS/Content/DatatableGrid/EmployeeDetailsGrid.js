@@ -74,7 +74,7 @@ function Employee() {
 
                     if (full["EmployeeType"] == "V") {
 
-                        return 'Vehicle';
+                        return 'Vehicle Driver';
 
                     }
                     if (full["EmployeeType"] == "S") {

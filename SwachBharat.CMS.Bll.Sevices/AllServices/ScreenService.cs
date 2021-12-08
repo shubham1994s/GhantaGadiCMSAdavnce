@@ -1791,6 +1791,42 @@ namespace SwachBharat.CMS.Bll.Services
             return model;
         }
 
+        private StreetSweepingDetail FillStreetSweepDetailsDataModel(StreetSweepVM data)
+        {
+            StreetSweepingDetail model = new StreetSweepingDetail();
+            model.areaId = data.areaId;
+            model.wardId = data.WardNo;
+            model.zoneId = data.ZoneId;
+            model.SSId = data.SSId;
+            model.SSAddress = data.SSAddress;
+            model.SSLat = data.SSLat;
+            model.SSLong = data.SSLong;
+            model.SSName = data.SSName;
+            model.SSNameMar = data.SSNameMar;
+            model.SSQRCode = data.SSQRCode;
+            model.ReferanceId = data.ReferanceId;
+            model.lastModifiedDate = DateTime.Now;
+            return model;
+        }
+
+           private LiquidWasteDetail FillLiquidWasteDetailsDataModel(LiquidWasteVM data)
+        {
+            LiquidWasteDetail model = new LiquidWasteDetail();
+            model.areaId = data.areaId;
+            model.wardId = data.WardNo;
+            model.zoneId = data.ZoneId;
+            model.LWId = data.LWId;
+            model.LWAddreLW = data.LWAddress;
+            model.LWLat = data.LWLat;
+            model.LWLong = data.LWLong;
+            model.LWName = data.LWName;
+            model.LWNameMar = data.LWNameMar;
+            model.LWQRCode = data.LWQRCode;
+            model.ReferanceId = data.ReferanceId;
+            model.lastModifiedDate = DateTime.Now;
+            return model;
+        }
+
         // Added By saurabh (04 June 2019)
         private QrEmployeeMaster FillHSEmployeeDataModel(HouseScanifyEmployeeDetailsVM data)
         {
@@ -2180,6 +2216,42 @@ namespace SwachBharat.CMS.Bll.Services
             return model;
         }
 
+        private StreetSweepVM FillStreetSweepDetailsViewModel(StreetSweepingDetail data)
+        {
+            StreetSweepVM model = new StreetSweepVM();
+            model.areaId = data.areaId;
+            model.WardNo = data.wardId;
+            model.ZoneId = data.zoneId;
+            model.SSId = data.SSId;
+            model.SSAddress = data.SSAddress;
+            model.SSLat = data.SSLat;
+            model.SSLong = data.SSLong;
+            model.SSName = data.SSName;
+            model.SSNameMar = data.SSNameMar;
+            model.SSQRCode = data.SSQRCode;
+            model.ReferanceId = data.ReferanceId;
+            //model.lastModifiedDate = data.lastModifiedDate;
+            return model;
+        }
+
+        private LiquidWasteVM FillLiquidWasteDetailsViewModel(LiquidWasteDetail data)
+        {
+            LiquidWasteVM model = new LiquidWasteVM();
+            model.areaId = data.areaId;
+            model.WardNo = data.wardId;
+            model.ZoneId = data.zoneId;
+            model.LWId = data.LWId;
+            model.LWAddress = data.LWAddreLW;
+            model.LWLat = data.LWLat;
+            model.LWLong = data.LWLong;
+            model.LWName = data.LWName;
+            model.LWNameMar = data.LWNameMar;
+            model.LWQRCode = data.LWQRCode;
+            model.ReferanceId = data.ReferanceId;
+            //model.lastModifiedDate = data.lastModifiedDate;
+            return model;
+        }
+
 
         //Added By Saurabh (04 June 2019)
         private HouseScanifyEmployeeDetailsVM FillHSEmployeeViewModel(QrEmployeeMaster data)
@@ -2421,6 +2493,139 @@ namespace SwachBharat.CMS.Bll.Services
             }
         }
 
+
+        public StreetSweepVM GetStreetSweepDetails(int teamId)
+        {
+            try
+            {
+                DevSwachhBharatMainEntities dbMain = new DevSwachhBharatMainEntities();
+                var appDetails = dbMain.AppDetails.Where(x => x.AppId == AppID).FirstOrDefault();
+
+                string ThumbnaiUrlCMS = appDetails.baseImageUrlCMS + appDetails.basePath + appDetails.DumpYardQRCode + "/";
+                StreetSweepVM StreetSweep = new StreetSweepVM();
+
+                var Details = db.StreetSweepingDetails.Where(x => x.SSId == teamId).FirstOrDefault();
+                if (Details != null)
+                {
+                    StreetSweep = FillStreetSweepDetailsViewModel(Details);
+                    if (StreetSweep.SSQRCode != null && StreetSweep.SSQRCode != "")
+                    {
+                        HttpWebRequest httpReq = (HttpWebRequest)WebRequest.Create(ThumbnaiUrlCMS + StreetSweep.SSQRCode.Trim());
+                        HttpWebResponse httpRes = null;
+                        try
+                        {
+                            httpRes = (HttpWebResponse)httpReq.GetResponse(); // Error 404 right here,
+                            if (httpRes.StatusCode == HttpStatusCode.NotFound)
+                            {
+                                StreetSweep.SSQRCode = "/Images/default_not_upload.png";
+                            }
+                            else
+                            {
+                                StreetSweep.SSQRCode = ThumbnaiUrlCMS + StreetSweep.SSQRCode.Trim();
+                            }
+                        }
+                        catch (Exception e) { StreetSweep.SSQRCode = "/Images/default_not_upload.png"; }
+
+                        //  point.qrCode = ThumbnaiUrlCMS + point.qrCode.Trim();
+                    }
+                    else
+                    {
+                        StreetSweep.SSQRCode = "/Images/default_not_upload.png";
+                    }
+
+                    // house.WardList = ListWardNo();
+                    StreetSweep.AreaList = LoadListArea(Convert.ToInt32(StreetSweep.WardNo));//ListArea();
+                    StreetSweep.ZoneList = ListZone();
+                    StreetSweep.WardList = LoadListWardNo(Convert.ToInt32(StreetSweep.ZoneId));//ListWardNo();
+
+                    return StreetSweep;
+                }
+                else
+                {
+                    var id = db.StreetSweepingDetails.OrderByDescending(x => x.SSId).Select(x => x.SSId).FirstOrDefault();
+                    int number = 1000;
+                    string refer = "SSSBA" + (number + id + 1);
+                    StreetSweep.ReferanceId = refer;
+                    StreetSweep.SSQRCode = "/Images/QRcode.png";
+                    StreetSweep.WardList = ListWardNo();
+                    StreetSweep.AreaList = ListArea();
+                    StreetSweep.ZoneList = ListZone();
+                    return StreetSweep;
+                }
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public LiquidWasteVM GetLiquidWasteDetails(int teamId)
+        {
+            try
+            {
+                DevSwachhBharatMainEntities dbMain = new DevSwachhBharatMainEntities();
+                var appDetails = dbMain.AppDetails.Where(x => x.AppId == AppID).FirstOrDefault();
+
+                string ThumbnaiUrlCMS = appDetails.baseImageUrlCMS + appDetails.basePath + appDetails.DumpYardQRCode + "/";
+                LiquidWasteVM LiquidWaste = new LiquidWasteVM();
+
+                var Details = db.LiquidWasteDetails.Where(x => x.LWId == teamId).FirstOrDefault();
+                if (Details != null)
+                {
+                    LiquidWaste = FillLiquidWasteDetailsViewModel(Details);
+                    if (LiquidWaste.LWQRCode != null && LiquidWaste.LWQRCode != "")
+                    {
+                        HttpWebRequest httpReq = (HttpWebRequest)WebRequest.Create(ThumbnaiUrlCMS + LiquidWaste.LWQRCode.Trim());
+                        HttpWebResponse httpRes = null;
+                        try
+                        {
+                            httpRes = (HttpWebResponse)httpReq.GetResponse(); // Error 404 right here,
+                            if (httpRes.StatusCode == HttpStatusCode.NotFound)
+                            {
+                                LiquidWaste.LWQRCode = "/Images/default_not_upload.png";
+                            }
+                            else
+                            {
+                                LiquidWaste.LWQRCode = ThumbnaiUrlCMS + LiquidWaste.LWQRCode.Trim();
+                            }
+                        }
+                        catch (Exception e) { LiquidWaste.LWQRCode = "/Images/default_not_upload.png"; }
+
+                        //  point.qrCode = ThumbnaiUrlCMS + point.qrCode.Trim();
+                    }
+                    else
+                    {
+                        LiquidWaste.LWQRCode = "/Images/default_not_upload.png";
+                    }
+
+                    // house.WardList = ListWardNo();
+                    LiquidWaste.AreaList = LoadListArea(Convert.ToInt32(LiquidWaste.WardNo));//ListArea();
+                    LiquidWaste.ZoneList = ListZone();
+                    LiquidWaste.WardList = LoadListWardNo(Convert.ToInt32(LiquidWaste.ZoneId));//ListWardNo();
+
+                    return LiquidWaste;
+                }
+                else
+                {
+                    var id = db.LiquidWasteDetails.OrderByDescending(x => x.LWId).Select(x => x.LWId).FirstOrDefault();
+                    int number = 1000;
+                    string refer = "LWSBA" + (number + id + 1);
+                    LiquidWaste.ReferanceId = refer;
+                    LiquidWaste.LWQRCode = "/Images/QRcode.png";
+                    LiquidWaste.WardList = ListWardNo();
+                    LiquidWaste.AreaList = ListArea();
+                    LiquidWaste.ZoneList = ListZone();
+                    return LiquidWaste;
+                }
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public DumpYardDetailsVM SaveDumpYardtDetails(DumpYardDetailsVM data)
         {
             try
@@ -2455,6 +2660,90 @@ namespace SwachBharat.CMS.Bll.Services
                 }
                 var dyId = db.DumpYardDetails.OrderByDescending(x => x.dyId).Select(x => x.dyId).FirstOrDefault();
                 DumpYardDetailsVM vv = GetDumpYardtDetails(dyId);
+                return vv;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public StreetSweepVM SaveStreetSweepDetails(StreetSweepVM data)
+        {
+            try
+            {
+                using (var db = new DevChildSwachhBharatNagpurEntities(AppID))
+                {
+                    if (data.SSId > 0)
+                    {
+                        var model = db.StreetSweepingDetails.Where(x => x.SSId == data.SSId).FirstOrDefault();
+                        if (model != null)
+                        {
+                            model.zoneId = data.ZoneId;
+                            model.wardId = data.WardNo;
+                            model.areaId = data.areaId;
+                            model.SSAddress = data.SSAddress;
+                            model.SSLat = data.SSLat;
+                            model.SSLong = data.SSLong;
+                            model.SSName = data.SSName;
+                            model.SSNameMar = data.SSNameMar;
+                            model.SSQRCode = data.SSQRCode;
+                            model.ReferanceId = data.ReferanceId;
+                            model.lastModifiedDate = DateTime.Now;
+                            db.SaveChanges();
+                        }
+                    }
+                    else
+                    {
+                        var type = FillStreetSweepDetailsDataModel(data);
+                        db.StreetSweepingDetails.Add(type);
+                        db.SaveChanges();
+                    }
+                }
+                var SSId = db.StreetSweepingDetails.OrderByDescending(x => x.SSId).Select(x => x.SSId).FirstOrDefault();
+                StreetSweepVM vv = GetStreetSweepDetails(SSId);
+                return vv;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public LiquidWasteVM SaveLiquidWasteDetails(LiquidWasteVM data)
+        {
+            try
+            {
+                using (var db = new DevChildSwachhBharatNagpurEntities(AppID))
+                {
+                    if (data.LWId > 0)
+                    {
+                        var model = db.LiquidWasteDetails.Where(x => x.LWId == data.LWId).FirstOrDefault();
+                        if (model != null)
+                        {
+                            model.zoneId = data.ZoneId;
+                            model.wardId = data.WardNo;
+                            model.areaId = data.areaId;
+                            model.LWAddreLW = data.LWAddress;
+                            model.LWLat = data.LWLat;
+                            model.LWLong = data.LWLong;
+                            model.LWName = data.LWName;
+                            model.LWNameMar = data.LWNameMar;
+                            model.LWQRCode = data.LWQRCode;
+                            model.ReferanceId = data.ReferanceId;
+                            model.lastModifiedDate = DateTime.Now;
+                            db.SaveChanges();
+                        }
+                    }
+                    else
+                    {
+                        var type = FillLiquidWasteDetailsDataModel(data);
+                        db.LiquidWasteDetails.Add(type);
+                        db.SaveChanges();
+                    }
+                }
+                var LWId = db.LiquidWasteDetails.OrderByDescending(x => x.LWId).Select(x => x.LWId).FirstOrDefault();
+                LiquidWasteVM vv = GetLiquidWasteDetails(LWId);
                 return vv;
             }
             catch (Exception)
