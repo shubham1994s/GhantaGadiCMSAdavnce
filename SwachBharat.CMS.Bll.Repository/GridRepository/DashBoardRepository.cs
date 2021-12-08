@@ -65,7 +65,8 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                     return "";
                 }
             }
-            catch {
+            catch
+            {
                 return "";
 
             }
@@ -145,9 +146,9 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                 //  var result = data.SkipWhile(element => element.cId != element.reNewId); 
                 foreach (var item in data)
                 {
-                    
-                        item.NameMar = checkNull(item.NameMar); 
-                        item.Name = checkNull(item.Name);
+
+                    item.NameMar = checkNull(item.NameMar);
+                    item.Name = checkNull(item.Name);
                 }
                 if (!string.IsNullOrEmpty(SearchString))
                 {
@@ -220,13 +221,13 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                     c.Name.ToString().Contains(SearchString) || c.NameMar.ToString().Contains(SearchString) || c.State.ToUpper().ToString().Contains(SearchString)).ToList();
                     data = model.ToList();
                 }
-             return   data.OrderByDescending(c => c.Id);
+                return data.OrderByDescending(c => c.Id);
             }
         }
         public IEnumerable<SBATalukaGridRow> GetTalukaData(long wildcard, string SearchString, int appId)
         {
-            using(var dbMain = new DevSwachhBharatMainEntities())
-            { 
+            using (var dbMain = new DevSwachhBharatMainEntities())
+            {
                 var data = dbMain.tehsils.Select(x => new SBATalukaGridRow
                 {
                     Id = x.id,
@@ -267,7 +268,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                     data = model.ToList();
                 }
                 return data.OrderByDescending(c => c.Id);
-            } 
+            }
         }
 
         public IEnumerable<SBAAreaGridRow> GetAreaData(long wildcard, string SearchString, int appId)
@@ -279,7 +280,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                     Id = x.Id,
                     Name = x.Area,
                     NameMar = x.AreaMar,
-                    ward=db.WardNumbers.Where(v=>v.Id==x.wardId).FirstOrDefault().WardNo
+                    ward = db.WardNumbers.Where(v => v.Id == x.wardId).FirstOrDefault().WardNo
                 }).ToList();
                 //  var result = data.SkipWhile(element => element.cId != element.reNewId); 
                 foreach (var item in data)
@@ -287,9 +288,9 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                     item.Name = checkNull(item.Name);
                     item.NameMar = checkNull(item.NameMar);
                     item.ward = checkNull(item.ward);
-                  int wa =Convert.ToInt32( db.WardNumbers.Where(c => c.WardNo == item.ward).FirstOrDefault().zoneId);
+                    int wa = Convert.ToInt32(db.WardNumbers.Where(c => c.WardNo == item.ward).FirstOrDefault().zoneId);
                     string zone = db.ZoneMasters.Where(c => c.zoneId == wa).FirstOrDefault().name;
-                    item.ward=item.ward+" ("+zone+")";
+                    item.ward = item.ward + " (" + zone + ")";
 
                 }
                 if (!string.IsNullOrEmpty(SearchString))
@@ -300,7 +301,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
 
                     data = model.ToList();
                 }
-                return data.OrderByDescending(c=>c.Id);
+                return data.OrderByDescending(c => c.Id);
             }
         }
         public IEnumerable<SBAZoneGridRow> GetZoneData(long wildcard, string SearchString, int appId)
@@ -315,7 +316,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                 //  var result = data.SkipWhile(element => element.cId != element.reNewId); 
                 foreach (var item in data)
                 {
-              
+
                     if (item.Name == null && item.Name == "")
                         item.Name = "";
                 }
@@ -334,36 +335,36 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
             List<SBAVehicleTypeGridRow> obj = new List<SBAVehicleTypeGridRow>();
             using (var db = new DevChildSwachhBharatNagpurEntities(appId))
             {
-                
-                    var data = db.VehicleTypes.Select(x => new SBAVehicleTypeGridRow
-                    {
-                        Id = x.vtId,
-                        Name = x.description,
-                        NameMar = x.descriptionMar,
-                        isActive = x.isActive.ToString()
-                    }).ToList();
-                    //  var result = data.SkipWhile(element => element.cId != element.reNewId); 
 
-                    foreach (var item in data)
-                    {
-                        if (item.Name == null && item.Name == "")
-                            item.Name = "";
+                var data = db.VehicleTypes.Select(x => new SBAVehicleTypeGridRow
+                {
+                    Id = x.vtId,
+                    Name = x.description,
+                    NameMar = x.descriptionMar,
+                    isActive = x.isActive.ToString()
+                }).ToList();
+                //  var result = data.SkipWhile(element => element.cId != element.reNewId); 
 
-                        if (item.isActive == "True")
-                            item.isActive = "Active";
-                        else item.isActive = "Not Active";
-                    }
-                    if (!string.IsNullOrEmpty(SearchString))
-                    {
-                        var model = data.Where(c => c.Name.ToUpper().ToString().Contains(SearchString) || c.Name.ToString().ToLower().ToString().Contains(SearchString) || c.Name.ToString().Contains(SearchString) || c.isActive.ToString().Contains(SearchString) || c.isActive.ToLower().ToString().Contains(SearchString) || c.isActive.ToUpper().ToString().Contains(SearchString)).ToList();
+                foreach (var item in data)
+                {
+                    if (item.Name == null && item.Name == "")
+                        item.Name = "";
 
-                        data = model.ToList();
-                    }
-                    return data.OrderByDescending(c => c.Id);
-              
+                    if (item.isActive == "True")
+                        item.isActive = "Active";
+                    else item.isActive = "Not Active";
                 }
-          
-       
+                if (!string.IsNullOrEmpty(SearchString))
+                {
+                    var model = data.Where(c => c.Name.ToUpper().ToString().Contains(SearchString) || c.Name.ToString().ToLower().ToString().Contains(SearchString) || c.Name.ToString().Contains(SearchString) || c.isActive.ToString().Contains(SearchString) || c.isActive.ToLower().ToString().Contains(SearchString) || c.isActive.ToUpper().ToString().Contains(SearchString)).ToList();
+
+                    data = model.ToList();
+                }
+                return data.OrderByDescending(c => c.Id);
+
+            }
+
+
         }
         public IEnumerable<SBAWardNumberGridRow> GetWardNoData(long wildcard, string SearchString, int appId)
         {
@@ -373,14 +374,14 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                 {
                     Id = x.Id,
                     WardNo = x.WardNo,
-                    zone=db.ZoneMasters.Where(c=>c.zoneId==x.zoneId).FirstOrDefault().name,
+                    zone = db.ZoneMasters.Where(c => c.zoneId == x.zoneId).FirstOrDefault().name,
                 }).ToList();
                 foreach (var item in data)
                 {
                     item.WardNo = checkNull(item.WardNo);
                     item.zone = checkNull(item.zone);
-                    
-               
+
+
                 }
                 if (!string.IsNullOrEmpty(SearchString))
                 {
@@ -388,12 +389,12 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
 
                     data = model.ToList();
                 }
-                return data.OrderByDescending(c=>c.Id);
+                return data.OrderByDescending(c => c.Id);
             }
         }
 
 
-        public IEnumerable<SBAAttendenceSettingsGridRow> GetAttendenceSettingsDate(long wildcard, string SearchString,DateTime? fdate, DateTime? tdate, int userId, int appId)
+        public IEnumerable<SBAAttendenceSettingsGridRow> GetAttendenceSettingsDate(long wildcard, string SearchString, DateTime? fdate, DateTime? tdate, int userId, int appId)
         {
             List<SBAAttendenceSettingsGridRow> obj = new List<SBAAttendenceSettingsGridRow>();
             using (var db = new DevChildSwachhBharatNagpurEntities(appId))
@@ -457,40 +458,40 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                         startLong = x.startLong,
                         endLat = x.startLong,
                         endLong = x.endLong,
-                        NotificationTime=x.startTime,
+                        NotificationTime = x.startTime,
                         NotificationMobileNumber = db.UserMasters.Where(c => c.userId == x.userId).FirstOrDefault().userMobileNumber,
-                      //  vtId = vt,
+                        //  vtId = vt,
                         vehicleNumber = x.vehicleNumber,
                         CompareDate = x.daDate,
                         daDateTIme = (displayTime + " " + time)
                     });
                 }
-                    if (!string.IsNullOrEmpty(SearchString))
-                    {
-                        var model = obj.Where(c => c.vehicleNumber.Contains(SearchString) || c.daDate.Contains(SearchString) || c.endTime.Contains(SearchString) || c.startLat.Contains(SearchString) || c.endLat.Contains(SearchString) || c.startTime.Contains(SearchString) || c.userName.Contains(SearchString) || c.vtId.Contains(SearchString)
+                if (!string.IsNullOrEmpty(SearchString))
+                {
+                    var model = obj.Where(c => c.vehicleNumber.Contains(SearchString) || c.daDate.Contains(SearchString) || c.endTime.Contains(SearchString) || c.startLat.Contains(SearchString) || c.endLat.Contains(SearchString) || c.startTime.Contains(SearchString) || c.userName.Contains(SearchString) || c.vtId.Contains(SearchString)
 
-                        || c.vehicleNumber.ToLower().Contains(SearchString) || c.vtId.ToLower().Contains(SearchString) || c.daDate.ToLower().Contains(SearchString) || c.endTime.ToLower().Contains(SearchString) || c.startLat.ToLower().Contains(SearchString) || c.endLat.ToLower().Contains(SearchString) || c.startTime.ToLower().Contains(SearchString) || c.userName.ToLower().Contains(SearchString)).ToList();
+                    || c.vehicleNumber.ToLower().Contains(SearchString) || c.vtId.ToLower().Contains(SearchString) || c.daDate.ToLower().Contains(SearchString) || c.endTime.ToLower().Contains(SearchString) || c.startLat.ToLower().Contains(SearchString) || c.endLat.ToLower().Contains(SearchString) || c.startTime.ToLower().Contains(SearchString) || c.userName.ToLower().Contains(SearchString)).ToList();
 
-                        obj = model.ToList();
-                    }
+                    obj = model.ToList();
+                }
 
-                    //if (!string.IsNullOrEmpty(fdate.ToString()))
-                    //{
-                    //    DateTime? dt1 = null;
-                    //    if (!string.IsNullOrEmpty(tdate.ToString()))
-                    //    { dt1 = tdate; }
-                    //    else { dt1 = fdate; }
-                    //    obj = obj.Where(fullEntry => fullEntry.CompareDate >= fdate && fullEntry.CompareDate <= dt1).OrderByDescending(c => c.CompareDate).ToList();
-                    //}
-                    if (userId > 0)
-                    {
-                        var model = obj.Where(c => c.userId == userId).ToList();
+                //if (!string.IsNullOrEmpty(fdate.ToString()))
+                //{
+                //    DateTime? dt1 = null;
+                //    if (!string.IsNullOrEmpty(tdate.ToString()))
+                //    { dt1 = tdate; }
+                //    else { dt1 = fdate; }
+                //    obj = obj.Where(fullEntry => fullEntry.CompareDate >= fdate && fullEntry.CompareDate <= dt1).OrderByDescending(c => c.CompareDate).ToList();
+                //}
+                if (userId > 0)
+                {
+                    var model = obj.Where(c => c.userId == userId).ToList();
 
-                        obj = model.ToList();
-                    }
-                    var d = obj.OrderByDescending(c => DateTime.Parse(c.daDateTIme)).ToList();
-                    return d;
-               
+                    obj = model.ToList();
+                }
+                var d = obj.OrderByDescending(c => DateTime.Parse(c.daDateTIme)).ToList();
+                return d;
+
             }
         }
         public IEnumerable<SBAHouseDetailsGridRow> GetHouseDetailsData(long wildcard, string SearchString, int appId)
@@ -506,14 +507,14 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                     houseId = x.houseId,
                     WardNo = x.Ward,
                     Area = x.Area,
-                    zone=x.Zone,
+                    zone = x.Zone,
                     Address = x.Address,
                     houseNo = x.HouseNumber,
                     Mobile = x.MobileNumber,
                     Name = x.Name,
                     QRCode = ThumbnaiUrlCMS + x.Images.Trim(),
                     ReferanceId = x.ReferanceId
-                }).ToList();            
+                }).ToList();
                 if (!string.IsNullOrEmpty(SearchString))
                 {
                     //var model = data.Where(c => c.WardNo.ToUpper().ToString().Contains(SearchString)
@@ -538,7 +539,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
 
                     data = model.ToList();
                 }
-                return data.OrderByDescending(c=>c.houseId);
+                return data.OrderByDescending(c => c.houseId);
             }
         }
         public IEnumerable<SBAEmployeeDetailsGridRow> GetEmployeeDetailsData(long wildcard, string SearchString, int appId, string isActive)
@@ -648,7 +649,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                         isActive = x.isActive.ToString(),
                         bloodGroup = x.bloodGroup,
                         gcTarget = x.gcTarget,
-                        EmployeeType=x.EmployeeType
+                        EmployeeType = x.EmployeeType
 
 
                     }).Where(x => x.isActive == "False").ToList();
@@ -703,7 +704,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
 
                 }
             }
-            else 
+            else
             {
                 using (var db = new DevChildSwachhBharatNagpurEntities(appId))
                 {
@@ -721,7 +722,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                         isActive = x.isActive.ToString(),
                         bloodGroup = x.bloodGroup,
                         gcTarget = x.gcTarget,
-                        EmployeeType=x.EmployeeType
+                        EmployeeType = x.EmployeeType
 
 
                     }).ToList();
@@ -759,12 +760,12 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                         }
                     }
 
-                    
+
                     return data.OrderByDescending(c => c.userId);
                 }
             }
 
-           }
+        }
         public IEnumerable<SBAGarbagePointDetailsGridRow> GetGarbagePointData(long wildcard, string SearchString, int appId)
         {
             DevSwachhBharatMainEntities dbMain = new DevSwachhBharatMainEntities();
@@ -776,17 +777,17 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                 var data = db.PointDetails().Select(x => new SBAGarbagePointDetailsGridRow
                 {
 
-                    Zone= x.Zone,
+                    Zone = x.Zone,
                     Ward = x.Ward,
                     Area = x.Area,
                     Name = x.Name,
                     NameMar = x.NameMar,
                     Id = x.gpId,
-                    QrCode= ThumbnaiUrlCMS + x.Images.Trim(),
-                    Address= checkNull(x.Address).Replace("Unnamed Road, ", ""),
+                    QrCode = ThumbnaiUrlCMS + x.Images.Trim(),
+                    Address = checkNull(x.Address).Replace("Unnamed Road, ", ""),
                     ReferanceId = x.ReferanceId
 
-                }).ToList();               
+                }).ToList();
                 if (!string.IsNullOrEmpty(SearchString))
                 {
                     //var model = data.Where(c => c.Area.ToString().Contains(SearchString)
@@ -805,11 +806,11 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
 
                     data = model.ToList();
                 }
-              return  data.OrderByDescending(c => c.Id).ToList();
+                return data.OrderByDescending(c => c.Id).ToList();
             }
         }
 
-        
+
         public IEnumerable<SBALocationGridRow> GetLocatioData(long wildcard, string SearchString, DateTime? fdate, DateTime? tdate, int userId, int appId)
         {
             using (DevChildSwachhBharatNagpurEntities db = new DevChildSwachhBharatNagpurEntities(appId))
@@ -821,13 +822,13 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                 //var data1 = db.Locations.Where(l => l.datetime >= fdate && l.datetime <= tdate)
                 //            .Join(db.UserMasters, u => u.userId, i => i.userId
 
-               
+
 
                 var data1 = (from t1 in db.Locations.Where(l => l.datetime >= fdate && l.datetime <= tdate)
-                            join t2 in db.UserMasters on t1.userId equals t2.userId
-                            select new { t1.locId,t1.userId, t1.datetime, t1.address, t2.userName }).ToList();
+                             join t2 in db.UserMasters on t1.userId equals t2.userId
+                             select new { t1.locId, t1.userId, t1.datetime, t1.address, t2.userName }).ToList();
 
-                
+
                 if (userId > 0)
                 {
                     var model = data1.Where(c => c.userId == userId).ToList();
@@ -843,7 +844,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
 
                     data.Add(new SBALocationGridRow
                     {
-                         locId = x.locId,
+                        locId = x.locId,
 
                         //userName = db.UserMasters.FirstOrDefault(c => c.userId == x.userId).userName,
                         userId = Convert.ToInt32(x.userId),
@@ -852,7 +853,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                         time = t,// Convert.ToDateTime(x.datetime).ToString("hh:mm:ss"),
                         //string filtered = new string(original.SkipWhile(c => c == ';').ToArray());
 
-                        latlong = checkNull(x.address).Replace("Unnamed Road, ",""),
+                        latlong = checkNull(x.address).Replace("Unnamed Road, ", ""),
                         CompareDate = x.datetime,
                     });
 
@@ -914,7 +915,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                 using (DevChildSwachhBharatNagpurEntities db = new DevChildSwachhBharatNagpurEntities(appId))
                 {
 
-                    
+
 
                     var data1 = (from t1 in db.GarbageCollectionDetails.Where(g => g.gcType == 2 & g.gcDate >= fdate & g.gcDate <= tdate)
                                  join t2 in db.UserMasters on t1.userId equals t2.userId
@@ -930,8 +931,26 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
 
                                  select new
                                  {
-                                     t1.gcId,t1.note,t1.gpAfterImage,t1.gpBeforImage,t1.gcType,t1.gpId,t1.userId,t1.gcDate,t1.vehicleNumber,t1.locAddresss,
-                                     t1.batteryStatus,t1.Lat,t1.Long,t2.userName,t3.ReferanceId,t3.gpName,t3.zoneId,t3.wardId,t3.areaId,WardName = t5.WardNo,
+                                     t1.gcId,
+                                     t1.note,
+                                     t1.gpAfterImage,
+                                     t1.gpBeforImage,
+                                     t1.gcType,
+                                     t1.gpId,
+                                     t1.userId,
+                                     t1.gcDate,
+                                     t1.vehicleNumber,
+                                     t1.locAddresss,
+                                     t1.batteryStatus,
+                                     t1.Lat,
+                                     t1.Long,
+                                     t2.userName,
+                                     t3.ReferanceId,
+                                     t3.gpName,
+                                     t3.zoneId,
+                                     t3.wardId,
+                                     t3.areaId,
+                                     WardName = t5.WardNo,
                                      AreaName = t6.Area,
                                  }).ToList();
 
@@ -1039,7 +1058,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                         data = model.ToList();
                     }
 
-                    return data.OrderByDescending(c=>c.Id);
+                    return data.OrderByDescending(c => c.Id);
                 }
             }
         }
@@ -1051,7 +1070,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                 List<SBAGrabageCollectionGridRow> data = new List<SBAGrabageCollectionGridRow>();
                 var appDetails = dbMain.AppDetails.Where(x => x.AppId == appId).FirstOrDefault();
                 string ThumbnaiUrlAPI = appDetails.baseImageUrl + appDetails.basePath + appDetails.Collection + "/";
-               
+
                 using (DevChildSwachhBharatNagpurEntities db = new DevChildSwachhBharatNagpurEntities(appId))
                 {
 
@@ -1078,14 +1097,35 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                                  from t5 in wm.DefaultIfEmpty()
                                  join tm in db.TeritoryMasters on t3.areaId equals tm.Id into tm
                                  from t6 in tm.DefaultIfEmpty()
-                                 where (t3.zoneId == param1 || param1 == 0 || param1 == null) && (t5.Id == param2 || param2 == 0 || param2 == null) && (t6.Id ==         param3 || param3 == 0 || param3 == null)
+                                 where (t3.zoneId == param1 || param1 == 0 || param1 == null) && (t5.Id == param2 || param2 == 0 || param2 == null) && (t6.Id == param3 || param3 == 0 || param3 == null)
                                  select new
                                  {
-                                   t1.gcId, t1.note, t1.gpAfterImage,t1.gpBeforImage,t1.gcType,t1.dyId,t1.userId,t1.gcDate,t1.vehicleNumber,t1.locAddresss,
-                                   t1.totalGcWeight,t1.totalDryWeight,t1.totalWetWeight,t1.batteryStatus,t1.Lat,t1.Long,t2.userName,t3.ReferanceId,t3.dyName,
-                                   t3.zoneId,t3.wardId,t3.areaId, WardName = t5.WardNo,AreaName = t6.Area
+                                     t1.gcId,
+                                     t1.note,
+                                     t1.gpAfterImage,
+                                     t1.gpBeforImage,
+                                     t1.gcType,
+                                     t1.dyId,
+                                     t1.userId,
+                                     t1.gcDate,
+                                     t1.vehicleNumber,
+                                     t1.locAddresss,
+                                     t1.totalGcWeight,
+                                     t1.totalDryWeight,
+                                     t1.totalWetWeight,
+                                     t1.batteryStatus,
+                                     t1.Lat,
+                                     t1.Long,
+                                     t2.userName,
+                                     t3.ReferanceId,
+                                     t3.dyName,
+                                     t3.zoneId,
+                                     t3.wardId,
+                                     t3.areaId,
+                                     WardName = t5.WardNo,
+                                     AreaName = t6.Area
                                  }).ToList();
-                    
+
                     if (userId > 0)
                     {
                         var model = data1.Where(c => c.userId == userId).ToList();
@@ -1118,7 +1158,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                             gpAfterImage = (x.gpAfterImage == "" ? "/Images/default_not_upload.png" : ThumbnaiUrlAPI + x.gpAfterImage.Trim()),
                             gpBeforImage = (x.gpBeforImage == "" ? "/Images/default_not_upload.png" : ThumbnaiUrlAPI + x.gpBeforImage.Trim())
                         });
-                       
+
                         foreach (var item in data)
                         {
                             if (item.Lat != null && item.Long != "" && item.Lat != "" && item.Long != null)
@@ -1215,7 +1255,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                 //                }
 
 
-                var data = db.SP_GarbageCollection(appId, userId, fdate, tdate,param1,param2,param3).Select(x => new SBAGrabageCollectionGridRow
+                var data = db.SP_GarbageCollection(appId, userId, fdate, tdate, param1, param2, param3).Select(x => new SBAGrabageCollectionGridRow
                 {
                     Id = x.gcId,
                     userId = x.userId,
@@ -1261,27 +1301,48 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
 
                     data = model.ToList();
                 }
-                return data.OrderByDescending(c => c.gcDate).ToList().ToList(); ; 
-                
+                return data.OrderByDescending(c => c.gcDate).ToList().ToList(); ;
+
             }
         }
 
-        public IEnumerable<SBAAttendenceGrid>  GetAttendeceData(long wildcard, string SearchString, DateTime? fdate, DateTime? tdate, int userId, int appId)
+        public IEnumerable<SBAAttendenceGrid> GetAttendeceData(long wildcard, string SearchString, DateTime? fdate, DateTime? tdate, int userId, int appId)
         {
             List<SBAAttendenceGrid> obj = new List<SBAAttendenceGrid>();
             using (var db = new DevChildSwachhBharatNagpurEntities(appId))
-            {             
+            {
                 var data = db.Daily_Attendance.ToList();
+                //Roshan Start Code 08-12-2021
+                if (userId !=-1 && SearchString != "" && SearchString !="0" && SearchString != null && Convert.ToDateTime(fdate).ToString("dd/MM/yyyy") == Convert.ToDateTime(DateTime.Now).ToString("dd/MM/yyyy"))
+                {
+                    data = data.Where(c=>(c.EmployeeType== SearchString.ToString() && c.daDate== fdate && c.userId== userId)).ToList();
+                }
+                else 
+                if(Convert.ToDateTime(fdate).ToString("dd/MM/yyyy") == Convert.ToDateTime(DateTime.Now).ToString("dd/MM/yyyy") && userId == -1 && SearchString != "" && SearchString != "0")
+                {
+                    data = data.Where(c => (c.EmployeeType == SearchString.ToString())).ToList();
+                }
 
+
+                else
+                if (Convert.ToDateTime(fdate).ToString("dd/MM/yyyy") == Convert.ToDateTime(DateTime.Now).ToString("dd/MM/yyyy") && userId != -1 && SearchString != "" && SearchString == "0")
+                {
+                    data = data.Where(c => (c.userId==userId)).ToList();
+                }
+
+                else
+
+                //Roshan End Code 08-12-2021
                 if (Convert.ToDateTime(fdate).ToString("dd/MM/yyyy") == Convert.ToDateTime(DateTime.Now).ToString("dd/MM/yyyy"))
-                {  
-                   data = data.Where(c => (c.daDate == fdate||c.daEndDate == fdate || c.endTime == "")).ToList();
+                {
+                    data = data.Where(c => (c.daDate == fdate || c.daEndDate == fdate || c.endTime == "")).ToList();
                 }
-                else {
 
-                    data = data.Where(c => (c.daDate >= fdate && c.daDate <= tdate)|| (c.daDate >= fdate && c.daDate <= tdate)).ToList();
+                else
+                {
+                    data = data.Where(c => (c.daDate >= fdate && c.daDate <= tdate) || (c.daDate >= fdate && c.daDate <= tdate)).ToList();
                 }
-                
+
                 foreach (var x in data)
                 {
                     int a = Convert.ToInt32(x.vtId.Trim());
@@ -1295,7 +1356,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                     x.startLat = checkNull(x.startLat);
                     x.startLong = checkNull(x.startLong);
                     x.startTime = checkNull(x.startTime);
-                    x.vehicleNumber= checkNull(x.vehicleNumber);
+                    x.vehicleNumber = checkNull(x.vehicleNumber);
                     x.daEndNote = checkNull(x.daEndNote);
                     x.daStartNote = checkNull(x.daStartNote);
                     x.EmployeeType = checkNull(x.EmployeeType);
@@ -1304,7 +1365,8 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                     {
                         endate = "";
                     }
-                    else {
+                    else
+                    {
                         endate = Convert.ToDateTime(x.daEndDate).ToString("dd/MM/yyyy");
                     }
 
@@ -1329,15 +1391,15 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                         vehicleNumber = x.vehicleNumber,
                         CompareDate = x.daDate,
                         daDateTIme = (displayTime + " " + time),
-                        employeeType=x.EmployeeType
+                        employeeType = x.EmployeeType
                     });
                 }
 
                 if (!string.IsNullOrEmpty(SearchString))
                 {
-                    var model = obj.Where(c =>c.vehicleNumber.Contains(SearchString) || c.daDate.Contains(SearchString) || c.endTime.Contains(SearchString) || c.startLat.Contains(SearchString) || c.endLat.Contains(SearchString) || c.startTime.Contains(SearchString) || c.userName.Contains(SearchString) ||c.vtId.Contains(SearchString)
+                    var model = obj.Where(c => c.vehicleNumber.Contains(SearchString) || c.daDate.Contains(SearchString) || c.endTime.Contains(SearchString) || c.startLat.Contains(SearchString) || c.endLat.Contains(SearchString) || c.startTime.Contains(SearchString) || c.userName.Contains(SearchString) || c.vtId.Contains(SearchString) || c.employeeType.Contains(SearchString)
 
-                    || c.vehicleNumber.ToLower().Contains(SearchString) || c.vtId.ToLower().Contains(SearchString)|| c.daDate.ToLower().Contains(SearchString) || c.endTime.ToLower().Contains(SearchString) || c.startLat.ToLower().Contains(SearchString) || c.endLat.ToLower().Contains(SearchString) || c.startTime.ToLower().Contains(SearchString) || c.userName.ToLower().Contains(SearchString) ).ToList();
+                    || c.vehicleNumber.ToLower().Contains(SearchString) || c.vtId.ToLower().Contains(SearchString) || c.daDate.ToLower().Contains(SearchString) || c.endTime.ToLower().Contains(SearchString) || c.startLat.ToLower().Contains(SearchString) || c.endLat.ToLower().Contains(SearchString) || c.startTime.ToLower().Contains(SearchString) || c.userName.ToLower().Contains(SearchString)).ToList();
 
                     obj = model.ToList();
                 }
@@ -1356,7 +1418,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
 
                     obj = model.ToList();
                 }
-                
+
                 var d = obj.OrderByDescending(c => DateTime.Parse(c.daDateTIme)).ToList();
                 return d;
             }
@@ -1367,7 +1429,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
             List<ComplaintGrid> obj = new List<ComplaintGrid>();
             DevSwachhBharatMainEntities dbm = new DevSwachhBharatMainEntities();
             var appdetails = dbm.AppDetails.Where(c => c.AppId == appId).FirstOrDefault();
-       
+
             // string json = new WebClient().DownloadString("http://192.168.200.3:8077////api/Get/Complaint?appId=1");
             // string json = new WebClient().DownloadString(appdetails.Grampanchayat_Pro+ "/api/Get/Complaint?appId=1");
 
@@ -1445,8 +1507,8 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
             {
 
 
-                var data = db.SP_IdelTime(userId,fdate,tdate).Where(c=>c.IdelTime!=null& c.IdelTime>15).ToList().OrderByDescending(c=>c.StartTime);
-                
+                var data = db.SP_IdelTime(userId, fdate, tdate).Where(c => c.IdelTime != null & c.IdelTime > 15).ToList().OrderByDescending(c => c.StartTime);
+
                 foreach (var x in data)
                 {
                     TimeSpan spWorkMin = TimeSpan.FromMinutes(Convert.ToDouble(x.IdelTime));
@@ -1455,7 +1517,8 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                     string displayTime = Convert.ToDateTime(x.date).ToString("yyyy/MM/dd", CultureInfo.InvariantCulture);
                     string time = Convert.ToDateTime(x.StartTime).ToString("HH:mm:ss");
 
-                    obj.Add(new SBAEmplyeeIdelGrid() {
+                    obj.Add(new SBAEmplyeeIdelGrid()
+                    {
                         UserName = x.userName,
                         Date = Convert.ToDateTime(x.date).ToString("dd/MM/yyyy"),
                         StartTime = x.StartTime,
@@ -1491,14 +1554,14 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
 
                     obj = model.ToList();
                 }
-                   // data = model.OrderByDescending(c => c.DisplayTime).ToList();
-                
+                // data = model.OrderByDescending(c => c.DisplayTime).ToList();
+
                 //Address= checkNull(x.Address).Replace("Unnamed Road, ", ""),
                 //MyList.OrderBy(x => x.StartDate).ThenByDescending(x => x.EndDate);
                 //return obj;
                 return obj.OrderByDescending(c => c.daDateTIme).ToList();
             }
-         }
+        }
 
 
         public IEnumerable<SBAGarbageCountDetails> GetGarbageCountData(long wildcard, string SearchString, DateTime? fdate, DateTime? tdate, int userId, int appId)
@@ -1506,8 +1569,8 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
             List<SBAGarbageCountDetails> obj = new List<SBAGarbageCountDetails>();
             using (var db = new DevChildSwachhBharatNagpurEntities(appId))
             {
-                
-                var data = db.SP_Collection_Count( fdate, tdate,userId).ToList();
+
+                var data = db.SP_Collection_Count(fdate, tdate, userId).ToList();
 
                 if (!string.IsNullOrEmpty(SearchString))
                 {
@@ -1529,8 +1592,8 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                         StartTime = x.inTime,
                         FromDate = Convert.ToDateTime(x.fromDate).ToString("dd/MM/yyyy"),
                         ToDate = Convert.ToDateTime(x.ToDate).ToString("dd/MM/yyyy"),
-                        _Count=Convert.ToInt32(x.Count),
-                        
+                        _Count = Convert.ToInt32(x.Count),
+
                     });
                 }
                 return obj;
@@ -1545,13 +1608,13 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                 var data = dbMain.SP_Admin2().Select(x => new SBAAdminCountGrid
                 {
                     Name = x.appName,
-                    employee=Convert.ToInt32(x.userId),
-                    attenemplyee= Convert.ToInt32(x.attenUser)+"/"+ Convert.ToInt32(x.userId),
+                    employee = Convert.ToInt32(x.userId),
+                    attenemplyee = Convert.ToInt32(x.attenUser) + "/" + Convert.ToInt32(x.userId),
                     bybufer = Convert.ToInt32(x.byfurgetcol),
-                    notrecivedcol= Convert.ToInt32(x.notrecviedCollection),
+                    notrecivedcol = Convert.ToInt32(x.notrecviedCollection),
                     notspecified = Convert.ToInt32(x.notspecified),
                     total = Convert.ToInt32(x.collectionCount),
-                    mixed= Convert.ToInt32(x.mixedcolle),
+                    mixed = Convert.ToInt32(x.mixedcolle),
                 }).ToList();
                 ////  var result = data.SkipWhile(element => element.cId != element.reNewId); 
                 //foreach (var item in data)
@@ -1573,10 +1636,10 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                 //    data = model.ToList();
                 //}
                 //return data.OrderByDescending(c => c.Id);
-                return data.OrderBy(c=>c.Name);
+                return data.OrderBy(c => c.Name);
             }
-         
-         
+
+
         }
 
 
@@ -1717,7 +1780,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
 
         //Added By saurabh 05 MAy 2019
 
-        public IEnumerable<SBAEmpolyeeSummaryGrid> GetEmployeeSummaryData(long wildcard, string SearchString, DateTime? fdate, DateTime? tdate, int? userId , int appId)
+        public IEnumerable<SBAEmpolyeeSummaryGrid> GetEmployeeSummaryData(long wildcard, string SearchString, DateTime? fdate, DateTime? tdate, int? userId, int appId)
         {
             List<SBAEmpolyeeSummaryGrid> obj = new List<SBAEmpolyeeSummaryGrid>();
             using (var db = new DevChildSwachhBharatNagpurEntities(appId))
@@ -1729,8 +1792,8 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                 //db.Database.CommandTimeout = 5000;
                 db.Database.CommandTimeout = 500;
                 var data = db.SP_EmployeeSummary(fdate, tdate, userId <= 0 ? null : userId).ToList();
-               // var data2 = data.OrderByDescending(c => c.Startdate).ThenByDescending(c => c.StartTime).ToList();
-               //var data2 = data1.GroupBy(o => o.userId).Select(o => o.First()).AsEnumerable().ToList();
+                // var data2 = data.OrderByDescending(c => c.Startdate).ThenByDescending(c => c.StartTime).ToList();
+                //var data2 = data1.GroupBy(o => o.userId).Select(o => o.First()).AsEnumerable().ToList();
 
                 foreach (var x in data)
                 {
@@ -1742,7 +1805,8 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                     {
                         EndDate = "";
                     }
-                    else {
+                    else
+                    {
                         EndDate = Convert.ToDateTime(x.Enddate).ToString("dd/MM/yyyy");
                     }
 
@@ -1763,8 +1827,8 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                         Totaldistance = string.Format("{0:0.0}", (x.Totaldistance)).ToString(),
                         InBatteryStatus = x.InBatteryStatus,
                         OutBatteryStatus = x.OutBatteryStatus,
-                        daDateTIme =(displayTime + " " + time)
-                         
+                        daDateTIme = (displayTime + " " + time)
+
                         //daDateTIme = Convert.ToDateTime(x.Startdate + x.StartTime).ToString("dd/MM/yyyy hh:mm tt"),
                         //DateTime startDate = Convert.ToDateTime(a + " " + Time1);
 
@@ -1788,7 +1852,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
 
                 //foreach (var x in data)
                 //{
-                   
+
                 //    ///x.daDate = checkNull(x.daDate.tp);
                 //    x.endLat = checkNull(x.endLat);
                 //    x.endLong = checkNull(x.endLong);
@@ -1848,7 +1912,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                 //if (userId > 0)
                 //{
                 //    var model = obj.Where(c => c.userId == userId).ToList();
-                    
+
                 //    obj = model.ToList();
                 //}
                 //return obj.OrderByDescending(c => c.daID );
@@ -1878,7 +1942,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
 
         //Added By Saurabh(07 May 2019)
         public IEnumerable<DashBoardVM> getEmployeeTargetData(long wildcard, string SearchString, DateTime? fdate, DateTime? tdate, int userId, int appId)
-    {
+        {
             List<DashBoardVM> obj = new List<DashBoardVM>();
             using (var db = new DevChildSwachhBharatNagpurEntities(appId))
             {
@@ -1886,7 +1950,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
 
                 var data = db.SP_EmployeeTarget(fdate, tdate, userId).ToList();
 
-                
+
                 foreach (var x in data)
                 {
 
@@ -1936,14 +2000,14 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                     // EndDate = string.IsNullOrEmpty(x.EndDate) ? " " : x.EndDate + " " + string.IsNullOrEmpty(x.EndTime) ? " " : x.EndTime
                     // StartDate = string.IsNullOrEmpty(Convert.ToString(x.StartDate)) ? " " :Convert.ToDateTime(x.StartDate).ToString("dd/MM/yyyy")  + " " + string.IsNullOrEmpty (x.StartTime) ? "" :x.StartTime,
                     //  EndDate = string.IsNullOrEmpty(Convert.ToString(x.EndDate)) ? " " : Convert.ToDateTime(x.EndDate).ToString("dd/MM/yyyy") + " " + string.IsNullOrEmpty((x.EndTime) ? "" : x.EndTime
-                     //StartDate = x.StartDate == null ? "" : Convert.ToDateTime(x.StartDate).ToString("dd/MM/yyyy"),
-                     //StartTime = x.StartTime,
-                     //EndTime = x.EndTime
+                    //StartDate = x.StartDate == null ? "" : Convert.ToDateTime(x.StartDate).ToString("dd/MM/yyyy"),
+                    //StartTime = x.StartTime,
+                    //EndTime = x.EndTime
                     //  string.IsNullOrEmpty(c.userNameMar) ? " " : c.userNameMar
-                   
+
                 }).ToList();
-               
-                
+
+
                 //if (!string.IsNullOrEmpty(SearchString))
                 //{
                 //    var model = data.Where(c => c.userMobileNumber.ToString().Contains(SearchString) || c.userEmployeeNo.ToString().Contains(SearchString)
@@ -1988,24 +2052,24 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                 //var data1 = db.Locations.Where(l => l.datetime >= fdate && l.datetime <= tdate)
 
                 var data = (from t1 in db.Qr_Employee_Daily_Attendance
-                             join t2 in db.QrEmployeeMasters on t1.qrEmpId equals t2.qrEmpId
-                             select new
-                             {
-                                 t1.qrEmpDaId,
-                                 t1.qrEmpId,
-                                 t1.startDate,
-                                 t1.endDate,
-                                 t1.startTime,
-                                 t1.endTime,
-                                 t1.startLat,
-                                 t1.startLong,
-                                 t1.endLat,
-                                 t1.endLong,
-                                 t1.startNote,
-                                 t1.endNote,
-                                 t2.qrEmpName,
-                                 
-                             }).OrderByDescending(c => c.startDate).ThenByDescending(c => c.startTime).ToList();
+                            join t2 in db.QrEmployeeMasters on t1.qrEmpId equals t2.qrEmpId
+                            select new
+                            {
+                                t1.qrEmpDaId,
+                                t1.qrEmpId,
+                                t1.startDate,
+                                t1.endDate,
+                                t1.startTime,
+                                t1.endTime,
+                                t1.startLat,
+                                t1.startLong,
+                                t1.endLat,
+                                t1.endLong,
+                                t1.startNote,
+                                t1.endNote,
+                                t2.qrEmpName,
+
+                            }).OrderByDescending(c => c.startDate).ThenByDescending(c => c.startTime).ToList();
 
                 //return obj.OrderBy(c => c.Date).ThenByDescending(c => c.StartTime);
 
@@ -2015,7 +2079,8 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                 {
                     data = data.Where(c => (c.startDate == fdate || c.endDate == fdate || c.endTime == "")).ToList();
                 }
-                else {
+                else
+                {
 
                     data = data.Where(c => (c.startDate >= fdate && c.startDate <= tdate) || (c.startDate >= fdate && c.startDate <= tdate)).ToList();
                 }
@@ -2029,7 +2094,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
 
                 foreach (var x in data)
                 {
-                    
+
                     DateTime cDate = DateTime.Now;
 
                     TimeSpan timespan = new TimeSpan(00, 00, 00);
@@ -2041,7 +2106,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                     string sTime = Convert.ToDateTime(x.startTime).ToString("HH:mm:ss");
 
                     var a = (Convert.ToDateTime(x.startDate).ToString("MM/dd/yyyy"));
-                    var b = x.endDate == null ? Convert.ToDateTime(cDate).ToString("MM/dd/yyyy") :  Convert.ToDateTime(x.endDate).ToString("MM/dd/yyyy");
+                    var b = x.endDate == null ? Convert.ToDateTime(cDate).ToString("MM/dd/yyyy") : Convert.ToDateTime(x.endDate).ToString("MM/dd/yyyy");
 
                     string Time1 = (x.startTime).ToString();
                     string Time2 = ((x.endTime == "" ? displayTime : x.endTime).ToString());
@@ -2056,7 +2121,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                     //x.startLat = checkNull(x.startLat);
                     //x.startLong = checkNull(x.startLong);
                     //x.startTime = checkNull(x.startTime);
-                   
+
                     //x.endNote = checkNull(x.endNote);
                     //x.startNote = checkNull(x.startNote);
                     string endate = "";
@@ -2064,7 +2129,8 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                     {
                         endate = "";
                     }
-                    else {
+                    else
+                    {
                         endate = Convert.ToDateTime(x.endDate).ToString("dd/MM/yyyy");
                     }
                     obj.Add(new SBAHSAttendanceGrid()
@@ -2108,7 +2174,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                 //    else { dt1 = fdate; }
                 //    obj = obj.Where(fullEntry => fullEntry.CompareDate >= fdate && fullEntry.CompareDate <= dt1).OrderByDescending(c => c.CompareDate).ToList();
                 //}
-              
+
                 return obj.OrderByDescending(c => c.daDateTIme).ToList();
             }
         }
@@ -2130,7 +2196,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                 WebClient WebClient = new WebClient();
                 WebClient.Encoding = System.Text.Encoding.UTF8;
 
-                var json = WebClient.DownloadString(appDetails.Grampanchayat_Pro + "/api/Get/AnswerDetailsList?appId=" + appDetails.GramPanchyatAppID + "&LangId=1&Fdate="+ fdate + "&Tdate="+ tdate);
+                var json = WebClient.DownloadString(appDetails.Grampanchayat_Pro + "/api/Get/AnswerDetailsList?appId=" + appDetails.GramPanchyatAppID + "&LangId=1&Fdate=" + fdate + "&Tdate=" + tdate);
                 List<GPLeagueGridRow> obj = JsonConvert.DeserializeObject<List<GPLeagueGridRow>>(json).Where(c => Convert.ToDateTime(c.AnsDate) >= fdate & Convert.ToDateTime(c.AnsDate) <= tdate).ToList();
 
                 //List<GPLeagueGridRow> obj = JsonConvert.DeserializeObject<List<GPLeagueGridRow>>(json).ToList();
@@ -2184,7 +2250,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                 }
 
                 return objData.OrderByDescending(c => c.AnsDate);
-             
+
             }
         }
 
@@ -2202,7 +2268,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
             //            join t2 in gamemaster on t1.gameid equals t2.gameid
             //            select new { t1.id, t1.name, t1.mobile, t1.score, t1.created, t2.gameid, t2.gamename }).tolist();
 
-         
+
 
             DevSwachhBharatMainEntities dbMain = new DevSwachhBharatMainEntities();
             var appDetails = dbMain.AppDetails.Where(x => x.AppId == appId).FirstOrDefault();
@@ -2210,11 +2276,11 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
 
             using (var db = new DevChildSwachhBharatNagpurEntities(appId))
             {
-                
 
-                var  mData = dbMain.Sauchalay_feedback.Where(x => x.AppId == appId && x.Date >= fdate && x.Date <= tdate).ToList();
 
-                
+                var mData = dbMain.Sauchalay_feedback.Where(x => x.AppId == appId && x.Date >= fdate && x.Date <= tdate).ToList();
+
+
                 var cData = db.SauchalayAddresses.ToList();
 
                 //var data = (from t1 in mData
@@ -2222,9 +2288,9 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                 //            select new { t1.SauchalayFeedback_ID, t1.ULB, t1.SauchalayID, t1.AppId, t1.Fullname, t1.MobileNo, t1.que1, t1.que2, t1.que3,                            t1.Rating,t1.Feedback,t1.Date,t2.Address });
 
                 var data = (from t1 in mData
-                            join t2 in cData on t1.SauchalayID equals t2.SauchalayID into ps 
+                            join t2 in cData on t1.SauchalayID equals t2.SauchalayID into ps
                             from t3 in ps.DefaultIfEmpty()
-                            select new { t1.SauchalayFeedback_ID, t1.ULB, t1.SauchalayID, t1.AppId, t1.Fullname, t1.MobileNo, t1.que1, t1.que2, t1.que3, t1.Rating, t1.Feedback, t1.Date, Address = (t3 == null ? string.Empty : t3.Address)}).ToList();
+                            select new { t1.SauchalayFeedback_ID, t1.ULB, t1.SauchalayID, t1.AppId, t1.Fullname, t1.MobileNo, t1.que1, t1.que2, t1.que3, t1.Rating, t1.Feedback, t1.Date, Address = (t3 == null ? string.Empty : t3.Address) }).ToList();
 
 
                 if (data != null)
@@ -2260,7 +2326,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                             Rating = x.Rating,
                             Feedback = x.Feedback,
                             Date = Convert.ToDateTime(x.Date).ToString("dd/MM/yyyy  hh:mm tt"),
-                           // date = Convert.ToDateTime(x.createdDate2).ToString("dd/MM/yyyy hh:mm tt"),
+                            // date = Convert.ToDateTime(x.createdDate2).ToString("dd/MM/yyyy hh:mm tt"),
                         });
 
 
@@ -2280,8 +2346,8 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
             string ThumbnaiUrlCMS = appDetails.baseImageUrlCMS + appDetails.basePath + appDetails.HouseQRCode + "/";
             using (var db = new DevChildSwachhBharatNagpurEntities(appId))
             {
-               
-                  var data = db.SauchalayAddresses.AsEnumerable().Select(x => new SauchalayRegistrationGridRow
+
+                var data = db.SauchalayAddresses.AsEnumerable().Select(x => new SauchalayRegistrationGridRow
                 {
                     Id = x.Id,
                     SauchalayID = x.SauchalayID,
@@ -2291,7 +2357,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                     QrImage = (string.IsNullOrEmpty(x.QrImageUrl) ? "/Images/default_not_upload.png" : x.QrImageUrl),
                     Mobile = x.Mobile,
                     CreatedDate = Convert.ToDateTime(x.CreatedDate).ToString("dd/MM/yyyy h:mm tt")
-                   
+
 
                 }).ToList();
                 if (!string.IsNullOrEmpty(SearchString))
@@ -2426,37 +2492,37 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
             //string ThumbnaiUrlCMS = appDetails.baseImageUrlCMS + appDetails.basePath + "/GameImages/";
             //using (var db = new DevChildSwachhBharatNagpurEntities(appId))
             //{
-                var data = dbMain.GameDetails.ToList();
-                if (data != null)
+            var data = dbMain.GameDetails.ToList();
+            if (data != null)
+            {
+                foreach (var x in data)
                 {
-                    foreach (var x in data)
+                    obj.Add(new InfotainmentDetailsGridRow()
                     {
-                        obj.Add(new InfotainmentDetailsGridRow()
-                        {
-                            GameDetailsId = x.GameDetailsID,
-                            GameName = dbMain.GameMasters.Where(c => c.GameId == x.GameMasterID).FirstOrDefault().GameName,
-                            GameNameMar = dbMain.GameMasters.Where(c => c.GameId == x.GameMasterID).FirstOrDefault().GameName,
-                            SloganId = Convert.ToInt16(x.SloganID),
-                            Slogan = dbMain.Game_Slogan.Where(c => c.ID == x.SloganID).FirstOrDefault().Slogan,
-                            //Image = (string.IsNullOrEmpty(x.ImageUrl) ? "/Images/default_not_upload.png" : ThumbnaiUrlCMS + x.ImageUrl),
-                            Image = (string.IsNullOrEmpty(x.ImageUrl) ? "/Images/default_not_upload.png" :  x.ImageUrl),
-                            RightAnswer = dbMain.Game_AnswerType.Where(c => c.AnswerTypeId == x.RightAnswerID).FirstOrDefault().AnswerType,
-                            Points = Convert.ToInt16(x.Point)
-                        });
-                    }
-
+                        GameDetailsId = x.GameDetailsID,
+                        GameName = dbMain.GameMasters.Where(c => c.GameId == x.GameMasterID).FirstOrDefault().GameName,
+                        GameNameMar = dbMain.GameMasters.Where(c => c.GameId == x.GameMasterID).FirstOrDefault().GameName,
+                        SloganId = Convert.ToInt16(x.SloganID),
+                        Slogan = dbMain.Game_Slogan.Where(c => c.ID == x.SloganID).FirstOrDefault().Slogan,
+                        //Image = (string.IsNullOrEmpty(x.ImageUrl) ? "/Images/default_not_upload.png" : ThumbnaiUrlCMS + x.ImageUrl),
+                        Image = (string.IsNullOrEmpty(x.ImageUrl) ? "/Images/default_not_upload.png" : x.ImageUrl),
+                        RightAnswer = dbMain.Game_AnswerType.Where(c => c.AnswerTypeId == x.RightAnswerID).FirstOrDefault().AnswerType,
+                        Points = Convert.ToInt16(x.Point)
+                    });
                 }
-           
+
+            }
+
             if (!string.IsNullOrEmpty(SearchString))
-                {
-                    var model = obj.Where(c => ((string.IsNullOrEmpty(c.GameName) ? " " : c.GameName) + " " +
-                                         (string.IsNullOrEmpty(c.Slogan) ? " " : c.Slogan) + " " +
-                                         (string.IsNullOrEmpty(c.RightAnswer) ? " " : c.RightAnswer)).ToUpper().Contains(SearchString.ToUpper())).ToList();
+            {
+                var model = obj.Where(c => ((string.IsNullOrEmpty(c.GameName) ? " " : c.GameName) + " " +
+                                     (string.IsNullOrEmpty(c.Slogan) ? " " : c.Slogan) + " " +
+                                     (string.IsNullOrEmpty(c.RightAnswer) ? " " : c.RightAnswer)).ToUpper().Contains(SearchString.ToUpper())).ToList();
 
-                    obj = model.ToList();
-                }
+                obj = model.ToList();
+            }
 
-                return obj.OrderByDescending(c => c.GameDetailsId);
+            return obj.OrderByDescending(c => c.GameDetailsId);
 
             //}
         }
@@ -2467,14 +2533,14 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
 
             DevSwachhBharatMainEntities dbMain = new DevSwachhBharatMainEntities();
             var appDetails = dbMain.AppDetails.Where(x => x.AppId == appId).FirstOrDefault();
-            
+
 
             if (appId == 0)
             {
                 var data = (from t1 in dbMain.GamePlayerDetails.Where(g => g.Created >= fdate && g.Created <= tdate)
-                           join t2 in dbMain.GameMasters on t1.GameId equals t2.GameId
-                           select new { t1.ID, t1.Name, t1.Mobile, t1.Score, t1.Created, t2.GameId, t2.GameName }).ToList();
-                
+                            join t2 in dbMain.GameMasters on t1.GameId equals t2.GameId
+                            select new { t1.ID, t1.Name, t1.Mobile, t1.Score, t1.Created, t2.GameId, t2.GameName }).ToList();
+
                 //var data = dbMain.GamePlayerDetails.Where(c => c.Created >= fdate &&  c.Created <= tdate).ToList();
                 //var data1 = data.Where(c => c.GameId == userId).ToList();
 
@@ -2499,14 +2565,15 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                             Created = Convert.ToDateTime(x.Created).ToString("dd/MM/yyyy hh:mm tt"),
                             DisplayDateTime = Convert.ToDateTime(x.Created).ToString("yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture)
                             //string time = Convert.ToDateTime(x.startTime).ToString("HH:mm:ss")
-                        //Image = (string.IsNullOrEmpty(x.ImageUrl) ? "/Images/default_not_upload.png" : ThumbnaiUrlCMS + x.ImageUrl),
+                            //Image = (string.IsNullOrEmpty(x.ImageUrl) ? "/Images/default_not_upload.png" : ThumbnaiUrlCMS + x.ImageUrl),
 
                         });
                     }
 
                 }
             }
-            else {
+            else
+            {
                 using (var db = new DevChildSwachhBharatNagpurEntities(appId))
                 {
 
@@ -2522,8 +2589,8 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
 
                     var data = (from t1 in byId
                                 join t2 in gameMaster on t1.GameId equals t2.GameId
-                                select new { t1.ID, t1.Name, t1.Mobile, t1.Score, t1.Created, t2.GameId, t2.GameName ,t1.PlayerId}).ToList();
-                 
+                                select new { t1.ID, t1.Name, t1.Mobile, t1.Score, t1.Created, t2.GameId, t2.GameName, t1.PlayerId }).ToList();
+
                     //var byId = db.GamePlayerDetails
                     //           .Where(g => g.Created >= fdate && g.Created <= tdate && g.PlayerId != "External")
                     //           .ToDictionary(s => s.ID);
@@ -2571,7 +2638,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                             //Image = (string.IsNullOrEmpty(x.ImageUrl) ? "/Images/default_not_upload.png" : ThumbnaiUrlCMS + x.ImageUrl),
                         });
                     }
-                  
+
                 }
             }
 
@@ -2605,7 +2672,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                 //             where t2.CategoryID == 2 && t1.UserId == t3.userId
                 //             select new { t1.GarbageDetailsID, t1.SubCategoryID, t1.Weight, userId = (t1.UserId == 0 ? null : t1.UserId), t1.CreatedDate,
                 //                          t2.SubCategory,t3.userName}).ToList();
-               // int Param1 = (param1 == null ?Convert.ToInt32(param1 =0):param1);
+                // int Param1 = (param1 == null ?Convert.ToInt32(param1 =0):param1);
 
 
                 int Param2 = Convert.ToInt32(param2 == null ? 0 : param2);
@@ -2615,24 +2682,24 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                              join t4 in db.UserMasters
                              on t1.UserId equals t4.userId into g
                              from t4 in g.DefaultIfEmpty()
-                             where ((param1 == null && param2 == null) ? (t2.CategoryID == 1 ) || (t2.CategoryID == 2) : 
-                                    param1 != 1 && param2 == null ? t2.CategoryID == 1 : 
-                                    param1 == 1 && param2 != null ? t2.SubCategoryID == param2 : 
-                                    param1 == 2 && param2 == null ? t2.CategoryID== 2 : 
+                             where ((param1 == null && param2 == null) ? (t2.CategoryID == 1) || (t2.CategoryID == 2) :
+                                    param1 != 1 && param2 == null ? t2.CategoryID == 1 :
+                                    param1 == 1 && param2 != null ? t2.SubCategoryID == param2 :
+                                    param1 == 2 && param2 == null ? t2.CategoryID == 2 :
                                     param1 == 2 && param2 != null ? t2.SubCategoryID == param2 : t2.CategoryID == 0)
                              select new
-                                  {
-                                     t1.GarbageDetailsID,
-                                     t1.SubCategoryID,
-                                     t1.Weight,
-                                     userId = (t1.UserId == 0 ? null : t1.UserId),
-                                     t1.CreatedDate,
-                                     t1.Source,
-                                     t2.SubCategory,
-                                     t3.Category,
-                                     t4.userName
-                                 }).ToList();
-                
+                             {
+                                 t1.GarbageDetailsID,
+                                 t1.SubCategoryID,
+                                 t1.Weight,
+                                 userId = (t1.UserId == 0 ? null : t1.UserId),
+                                 t1.CreatedDate,
+                                 t1.Source,
+                                 t2.SubCategory,
+                                 t3.Category,
+                                 t4.userName
+                             }).ToList();
+
                 if (userId > 0)
                 {
                     var model = data1.Where(x => x.userId == userId).ToList();
@@ -2682,10 +2749,10 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                                      (string.IsNullOrEmpty(c.CreatedDate) ? " " : c.CreatedDate) + " " +
                                      (string.IsNullOrEmpty(c.CategoryName) ? " " : c.CategoryName) + " " +
                                      (string.IsNullOrEmpty(c.SubCategoryName) ? " " : c.SubCategoryName)).ToUpper().Contains(SearchString.ToUpper())).ToList();
-                    
+
                     data = model.OrderByDescending(c => c.DisplayTime).ToList();
                 }
-                return data.OrderByDescending(c => c.DisplayTime).ToList(); 
+                return data.OrderByDescending(c => c.DisplayTime).ToList();
             }
         }
 
@@ -2705,22 +2772,22 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
             var data = dbMain.AppDetails.FirstOrDefault();
             using (var db = new DevChildSwachhBharatNagpurEntities(data.AppId))
             {
-                var data1 = db.GarbageCollectionDetails.Where(c=> c.SourceId == 2).OrderByDescending(c => c.gcDate).ToList();
-                
-                    foreach (var x in data1)
+                var data1 = db.GarbageCollectionDetails.Where(c => c.SourceId == 2).OrderByDescending(c => c.gcDate).ToList();
+
+                foreach (var x in data1)
+                {
+                    obj.Add(new SBAGrabageCollectionGridRow()
                     {
-                        obj.Add(new SBAGrabageCollectionGridRow()
-                        {
-                            RFIDReaderId = x.RFIDReaderId,
-                            RFIDTagId = x.RFIDTagId,
-                            Lat = x.Lat,
-                            Long = x.Long,
-                            type1 = x.garbageType.ToString(),
-                            attandDate = (Convert.ToDateTime(x.gcDate) == null ? "" : Convert.ToDateTime(x.gcDate).ToString("dd/MM/yyyy hh:mm tt"))
-                            //((c.Name == null ? " " : c.Name)
-                        });
-                    }
-                
+                        RFIDReaderId = x.RFIDReaderId,
+                        RFIDTagId = x.RFIDTagId,
+                        Lat = x.Lat,
+                        Long = x.Long,
+                        type1 = x.garbageType.ToString(),
+                        attandDate = (Convert.ToDateTime(x.gcDate) == null ? "" : Convert.ToDateTime(x.gcDate).ToString("dd/MM/yyyy hh:mm tt"))
+                        //((c.Name == null ? " " : c.Name)
+                    });
+                }
+
 
             }
 
