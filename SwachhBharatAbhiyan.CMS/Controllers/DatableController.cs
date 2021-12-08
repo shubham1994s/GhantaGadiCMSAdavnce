@@ -87,7 +87,7 @@ namespace SwachhBharatAbhiyan.CMS.Controllers
         }
 
         private IDataTableRepository GetRepository(string INSERT_ID,string RepositoryName, string searchString = "", DateTime? fdate = null, DateTime? tdate = null, int userId = 0, string clientId = null, int? param1 = null, int? param2 = null, int? param3 = null)
-        {
+           {
             int product = 0, category = 0;
             //string[] arr = new string[6];
 
@@ -169,6 +169,7 @@ namespace SwachhBharatAbhiyan.CMS.Controllers
             else {
 
                 string dt = DateTime.Now.ToString("MM/dd/yyyy");
+                //string dt = DateTime.Now.ToString("dd/MM/yyyy");
                 fdate = Convert.ToDateTime(dt+ " " + "00:00:00");
                 tdate = Convert.ToDateTime(dt + " " + "23:59:59");
 

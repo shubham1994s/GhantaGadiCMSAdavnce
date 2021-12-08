@@ -1298,6 +1298,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                     x.vehicleNumber= checkNull(x.vehicleNumber);
                     x.daEndNote = checkNull(x.daEndNote);
                     x.daStartNote = checkNull(x.daStartNote);
+                    x.EmployeeType = checkNull(x.EmployeeType);
                     string endate = "";
                     if (x.daEndDate == null)
                     {
@@ -1327,7 +1328,8 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                         vtId = vt,
                         vehicleNumber = x.vehicleNumber,
                         CompareDate = x.daDate,
-                        daDateTIme = (displayTime + " " + time)
+                        daDateTIme = (displayTime + " " + time),
+                        employeeType=x.EmployeeType
                     });
                 }
 
@@ -1354,6 +1356,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
 
                     obj = model.ToList();
                 }
+                
                 var d = obj.OrderByDescending(c => DateTime.Parse(c.daDateTIme)).ToList();
                 return d;
             }

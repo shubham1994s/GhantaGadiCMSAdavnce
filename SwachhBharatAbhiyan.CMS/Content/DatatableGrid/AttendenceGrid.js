@@ -16,7 +16,12 @@
             $('#selectnumber').html(district);
         }
     });
-   
+
+
+  
+  
+    $('#selecttype').html('<option value=0>All Employee</option><option value=V>Vehicle Driver</option><option value=S>Street Sweeping</option><option value=L>Liquid Waste</option>');
+        
     $("#demoGrid").DataTable({
         "sDom": "ltipr",
         "order": [[15, "desc"]],
@@ -74,7 +79,8 @@
 
 
         "columns": [
-              { "data": "daID", "name": "daID", "autoWidth": true },
+            { "data": "daID", "name": "daID", "autoWidth": true },
+            { "data": "employeeType", "name": "EmployeeType", "autoWidth": true },
               { "data": "userName", "name": "userName", "autoWidth": true },
               { "data": "daDate", "name": "daDate", "autoWidth": true },
               { "data": "startTime", "name": "startTime", "autoWidth": true },
@@ -121,7 +127,7 @@ function showInventoriesGrid() {
 }
  
 function Search() {
-    var txt_fdate, txt_tdate, Client, UserId;
+    var txt_fdate, txt_tdate, Client, UserId , SearchType;
     var name = [];
     var arr = [$('#txt_fdate').val(), $('#txt_tdate').val()];
 
@@ -137,7 +143,8 @@ function Search() {
     NesEvent = " ";
     var Product = "";
     var catProduct = "";
-    var value = txt_fdate + "," + txt_tdate + "," + UserId + "," + $("#s").val();//txt_fdate + "," + txt_tdate + "," + UserId + "," + Client + "," + NesEvent + "," + Product + "," + catProduct + "," + 1;
+    SearchType = $('#selecttype').val();
+    var value = txt_fdate + "," + txt_tdate + "," + UserId + "," + $("#s").val() + SearchType ;//txt_fdate + "," + txt_tdate + "," + UserId + "," + Client + "," + NesEvent + "," + Product + "," + catProduct + "," + 1;
     // alert(value );
     oTable = $('#demoGrid').DataTable();
     oTable.search(value).draw();

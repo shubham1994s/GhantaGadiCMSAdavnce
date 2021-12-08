@@ -25,6 +25,8 @@ namespace SwachBharat.CMS.Bll.ViewModels.Grid
         public string Date { get; set; }
         public string daDateTIme { get; set; }
 
+        public string employeeType { get; set; }
+
 
     }
 }
