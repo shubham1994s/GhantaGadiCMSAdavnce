@@ -3526,6 +3526,75 @@ namespace SwachBharat.CMS.Bll.Services
             return ctptLocation;
         }
 
+
+
+        public EmployeeDetailsVM GetEmployeeList(int Appid, string pname)
+        {
+            try
+            {
+                using (var db = new DevChildSwachhBharatNagpurEntities(Appid))
+                {
+                    var Details = db.UserMasters.Where(x => x.EmployeeType == pname).ToList();
+                    if (Details != null)
+                    {
+                        EmployeeDetailsVM emp = new EmployeeDetailsVM();
+                        emp.EmployeeList = ListEmployeeName(Appid, pname);
+                        return emp;
+                    }
+                    else
+                    {
+                        return new EmployeeDetailsVM();
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return new EmployeeDetailsVM();
+            }
+
+        }
+
+
+        public List<SelectListItem> ListEmployeeName(int Appid, string pno)
+        {
+            var user = new List<SelectListItem>();
+            List<UserMaster> listObjects = new List<UserMaster>();
+            using (var db = new DevChildSwachhBharatNagpurEntities(Appid))
+            {
+
+                if (pno=="0")
+                {
+                    listObjects = (from obj in db.UserMasters
+                                   //where obj.EmployeeType == pno
+                                   select obj).GroupBy(n => new { n.userName }).Select(g => g.FirstOrDefault())
+                                            .ToList();
+                }
+                else
+                {
+
+                    listObjects = (from obj in db.UserMasters
+                                   where obj.EmployeeType == pno
+                                   select obj).GroupBy(n => new { n.userName }).Select(g => g.FirstOrDefault())
+                                             .ToList();
+                }
+
+
+                try
+                {
+                    user = listObjects
+                        .Select(x => new SelectListItem
+                        {
+                            Text = (string.IsNullOrEmpty(x.userName) ? " " : x.userName),
+                            // Value = (string.IsNullOrEmpty(x.EmployeeType) ? " " : x.EmployeeType)
+                            Value = (x.userId.ToString())
+                        }).Distinct().OrderBy(t => t.Text).ToList();
+                }
+                catch (Exception ex) { throw ex; }
+            }
+            return user;
+        }
+
         #endregion
 
         #region WasteManagement

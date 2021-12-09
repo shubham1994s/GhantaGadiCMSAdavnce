@@ -80,7 +80,28 @@
 
         "columns": [
             { "data": "daID", "name": "daID", "autoWidth": true },
-            { "data": "employeeType", "name": "EmployeeType", "autoWidth": true },
+            {
+                "data": "employeeType", "name": "EmployeeType", "autoWidth": true, "render": function (data, type, full, meta) {
+
+                    if (full["employeeType"] == "V") {
+
+                        return 'Vehicle Driver';
+
+                    }
+                    if (full["employeeType"] == "S") {
+
+                        return 'Street Sweeping';
+
+                    }
+                    if (full["employeeType"] == "L") {
+
+                        return 'Liquid Waste';
+
+                    } else {
+                        return 'Not Available';
+                    }
+                }
+            },
               { "data": "userName", "name": "userName", "autoWidth": true },
               { "data": "daDate", "name": "daDate", "autoWidth": true },
               { "data": "startTime", "name": "startTime", "autoWidth": true },
@@ -103,6 +124,27 @@
        // Sort: "locId DESC"
     });
 
+
+    $("#selecttype").change(function () {
+        debugger;
+        var Name = $('#selecttype').val();
+        $.ajax({
+            type: "post",
+            url: "/Attendence/EmployeeNameList?ename=" + Name + "",
+            data: { Name: Name },
+            datatype: "json",
+            traditional: true,
+            success: function (data) {
+                employee = '<option value="-1">Select Employee</option>';
+                employee = '<option value="-1">Select Employee</option>';
+                for (var i = 0; i < data.length; i++) {
+                    employee = employee + '<option value="' + data[i].Value + '">' + data[i].Text.replace(new RegExp("(?:\\b|_)([a-z])", 'g'), function ($2) { return $2.toUpperCase(); }); + '</option>';
+                }
+                $('#selectnumber').html(employee);
+            }
+
+        });
+    });
  
 });
 
@@ -151,3 +193,5 @@ function Search() {
     oTable.search("");
     document.getElementById('USER_ID_FK').value = -1;
 }
+
+

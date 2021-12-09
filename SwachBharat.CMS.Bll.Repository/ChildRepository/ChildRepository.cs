@@ -468,7 +468,11 @@ namespace SwachBharat.CMS.Bll.Repository.ChildRepository
             return screenService.GetUserTimeWiseRoute(date,fTime, tTime, userId);
         }
 
-     
+        public EmployeeDetailsVM GetEmployeeList(int Appid, string pname)
+        {
+            return screenService.GetEmployeeList(Appid, pname);
+        }
+
     }
 }
 

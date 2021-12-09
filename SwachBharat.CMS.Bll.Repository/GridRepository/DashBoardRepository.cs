@@ -1313,6 +1313,7 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
             {
                 var data = db.Daily_Attendance.ToList();
                 //Roshan Start Code 08-12-2021
+
                 if (userId !=-1 && SearchString != "" && SearchString !="0" && SearchString != null && Convert.ToDateTime(fdate).ToString("dd/MM/yyyy") == Convert.ToDateTime(DateTime.Now).ToString("dd/MM/yyyy"))
                 {
                     data = data.Where(c=>(c.EmployeeType== SearchString.ToString() && c.daDate== fdate && c.userId== userId)).ToList();
@@ -1322,22 +1323,19 @@ namespace SwachBharat.CMS.Bll.Repository.GridRepository
                 {
                     data = data.Where(c => (c.EmployeeType == SearchString.ToString())).ToList();
                 }
-
-
                 else
                 if (Convert.ToDateTime(fdate).ToString("dd/MM/yyyy") == Convert.ToDateTime(DateTime.Now).ToString("dd/MM/yyyy") && userId != -1 && SearchString != "" && SearchString == "0")
                 {
-                    data = data.Where(c => (c.userId==userId)).ToList();
+                    data = data.Where(c => (c.userId==userId  && c.daDate == fdate)).ToList();
                 }
-
                 else
 
                 //Roshan End Code 08-12-2021
+
                 if (Convert.ToDateTime(fdate).ToString("dd/MM/yyyy") == Convert.ToDateTime(DateTime.Now).ToString("dd/MM/yyyy"))
                 {
                     data = data.Where(c => (c.daDate == fdate || c.daEndDate == fdate || c.endTime == "")).ToList();
                 }
-
                 else
                 {
                     data = data.Where(c => (c.daDate >= fdate && c.daDate <= tdate) || (c.daDate >= fdate && c.daDate <= tdate)).ToList();

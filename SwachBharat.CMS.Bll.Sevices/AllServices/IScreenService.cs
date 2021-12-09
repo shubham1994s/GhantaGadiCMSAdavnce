@@ -142,6 +142,8 @@ namespace SwachBharat.CMS.Bll.Services
 
         List<SauchalayDetailsVM> GetCTPTLocation();
 
+        EmployeeDetailsVM GetEmployeeList(int Appid, string pname);
+
         #region WasteManagement
         WasteDetailsVM GetWasteDetails(int teamId);
 

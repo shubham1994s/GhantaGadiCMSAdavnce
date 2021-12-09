@@ -57,15 +57,15 @@ namespace SwachhBharatAbhiyan.CMS.Controllers
             }
             else
                 return Redirect("/Account/Login");
-           
+
         }
         public ActionResult UserAttendenceLocation(int daId)
         {
             if (SessionHandler.Current.AppId != 0)
             {
-            List<SBALUserLocationMapView> obj = new List<SBALUserLocationMapView>();
-            obj = childRepository.GetUserAttenLocation(daId);
-            return Json(obj, JsonRequestBehavior.AllowGet);
+                List<SBALUserLocationMapView> obj = new List<SBALUserLocationMapView>();
+                obj = childRepository.GetUserAttenLocation(daId);
+                return Json(obj, JsonRequestBehavior.AllowGet);
             }
             else
                 return Redirect("/Account/Login");
@@ -115,7 +115,7 @@ namespace SwachhBharatAbhiyan.CMS.Controllers
         {
             if (SessionHandler.Current.AppId != 0)
             {
-                
+
                 List<SBALUserLocationMapView> obj = new List<SBALUserLocationMapView>();
                 obj = childRepository.GetHouseAttenRoute(daId);
                 // return Json(obj);
@@ -177,5 +177,18 @@ namespace SwachhBharatAbhiyan.CMS.Controllers
         //}
 
 
+        public ActionResult EmployeeNameList(string ename)
+        {
+            if (SessionHandler.Current.AppId != 0)
+            {
+                EmployeeDetailsVM obj = new EmployeeDetailsVM();
+                int AppId = SessionHandler.Current.AppId;
+                obj = childRepository.GetEmployeeList(AppId, ename);
+                return Json(obj.EmployeeList, JsonRequestBehavior.AllowGet);
+
+            }
+            else
+                return Redirect("/Account/Login");
+        }
     }
 }
